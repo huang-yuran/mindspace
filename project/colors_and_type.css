@@ -1,0 +1,230 @@
+/* =====================================================================
+   Mindspace Design System — Colors & Type
+   ---------------------------------------------------------------------
+   Tokens and semantic styles. Import this file once at the top of any
+   page that should look like Mindspace.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* ─── Color: canvas / background ─────────────────────────────────── */
+  --ms-bg-1: #F4F2EF;          /* warm off-white, top of page */
+  --ms-bg-2: #ECEAE6;          /* slightly cooler, bottom of page */
+  --ms-bg-canvas: linear-gradient(180deg, var(--ms-bg-1) 0%, var(--ms-bg-2) 100%);
+
+  /* ─── Color: surface (glass cards over the canvas) ───────────────── */
+  --ms-surface-1: rgba(255, 255, 255, 0.72);  /* primary glass card */
+  --ms-surface-2: rgba(255, 255, 255, 0.54);  /* nested / secondary  */
+  --ms-surface-3: rgba(255, 255, 255, 0.38);  /* faintest, hairlines */
+  --ms-surface-hairline: rgba(255, 255, 255, 0.6);
+
+  /* ─── Color: foreground / text ───────────────────────────────────── */
+  --ms-fg-1: #2A2723;          /* primary, near-black warm grey */
+  --ms-fg-2: #7C7872;          /* secondary text, captions */
+  --ms-fg-3: #B5B0A8;          /* tertiary, subtle metadata */
+  --ms-fg-on-accent: #FFFFFF;
+
+  /* ─── Color: accent — iridescent gradient ────────────────────────── */
+  --ms-accent-1: #BFD4FF;      /* pale sky blue */
+  --ms-accent-2: #C9B8FF;      /* lavender */
+  --ms-accent-3: #FAC8E2;      /* soft pink */
+  --ms-accent-gradient: linear-gradient(135deg,
+    var(--ms-accent-1) 0%,
+    var(--ms-accent-2) 50%,
+    var(--ms-accent-3) 100%);
+  --ms-accent-gradient-soft: linear-gradient(135deg,
+    rgba(191, 212, 255, 0.4) 0%,
+    rgba(201, 184, 255, 0.4) 50%,
+    rgba(250, 200, 226, 0.4) 100%);
+  --ms-accent-solid: #C9B8FF;  /* fallback when gradient isn't available */
+
+  /* ─── Color: semantic / status ───────────────────────────────────── */
+  --ms-status-load-low:   #A8D0B5;  /* 偏低 - desaturated sage */
+  --ms-status-load-mid:   #E5D9B5;  /* 適中 - warm cream */
+  --ms-status-load-high:  #C9B8FF;  /* 偏高 - lavender (uses accent) */
+  --ms-status-dot:        #6FA8E5;  /* the small "active" dot next to product names */
+
+  /* ─── Type: family ───────────────────────────────────────────────── */
+  --ms-font-cn: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --ms-font-en: 'Inter', system-ui, -apple-system, sans-serif;
+  --ms-font-display: var(--ms-font-cn);
+  --ms-font-body: var(--ms-font-cn);
+
+  /* ─── Type: scale (in px, kept simple) ───────────────────────────── */
+  --ms-text-xs:   12px;
+  --ms-text-sm:   14px;
+  --ms-text-base: 16px;
+  --ms-text-md:   20px;
+  --ms-text-lg:   28px;
+  --ms-text-xl:   36px;
+  --ms-text-2xl:  44px;
+  --ms-text-3xl:  56px;
+
+  /* ─── Type: weight ───────────────────────────────────────────────── */
+  --ms-weight-light: 300;
+  --ms-weight-regular: 400;
+  --ms-weight-medium: 500;
+  --ms-weight-semibold: 600;
+
+  /* ─── Type: line-height ──────────────────────────────────────────── */
+  --ms-lh-display: 1.15;
+  --ms-lh-tight:   1.3;
+  --ms-lh-body:    1.6;
+
+  /* ─── Spacing ────────────────────────────────────────────────────── */
+  --ms-space-1: 4px;
+  --ms-space-2: 8px;
+  --ms-space-3: 12px;
+  --ms-space-4: 16px;
+  --ms-space-5: 24px;
+  --ms-space-6: 32px;
+  --ms-space-7: 48px;
+  --ms-space-8: 64px;
+  --ms-space-9: 96px;
+
+  /* ─── Radius ─────────────────────────────────────────────────────── */
+  --ms-radius-sm:   8px;
+  --ms-radius-md:   16px;
+  --ms-radius-lg:   20px;
+  --ms-radius-xl:   28px;
+  --ms-radius-pill: 999px;
+
+  /* ─── Shadows / elevation ────────────────────────────────────────── */
+  --ms-shadow-glass:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 40px -12px rgba(60, 50, 40, 0.18);
+  --ms-shadow-card:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 6px 24px -8px rgba(60, 50, 40, 0.12);
+  --ms-shadow-floating:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 20px 60px -20px rgba(60, 50, 40, 0.25);
+  --ms-glow-accent:
+    0 0 32px rgba(201, 184, 255, 0.45),
+    0 0 64px rgba(191, 212, 255, 0.25);
+
+  /* ─── Blur / glass ───────────────────────────────────────────────── */
+  --ms-blur-glass: blur(24px) saturate(1.1);
+  --ms-blur-modal: blur(8px);
+
+  /* ─── Motion ─────────────────────────────────────────────────────── */
+  --ms-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ms-dur-fast:   240ms;
+  --ms-dur-base:   400ms;
+  --ms-dur-slow:   600ms;
+  --ms-dur-ambient: 4500ms; /* brain pulse */
+}
+
+/* ─── Page-level defaults ─────────────────────────────────────────── */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--ms-font-body);
+  font-size: var(--ms-text-base);
+  line-height: var(--ms-lh-body);
+  color: var(--ms-fg-1);
+  background: var(--ms-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Semantic type styles ────────────────────────────────────────── */
+.ms-h1, h1.ms {
+  font-family: var(--ms-font-display);
+  font-size: var(--ms-text-2xl);
+  font-weight: var(--ms-weight-medium);
+  line-height: var(--ms-lh-display);
+  letter-spacing: 0;
+  color: var(--ms-fg-1);
+  margin: 0;
+}
+
+.ms-h2, h2.ms {
+  font-family: var(--ms-font-display);
+  font-size: var(--ms-text-xl);
+  font-weight: var(--ms-weight-medium);
+  line-height: var(--ms-lh-display);
+  color: var(--ms-fg-1);
+  margin: 0;
+}
+
+.ms-h3, h3.ms {
+  font-family: var(--ms-font-display);
+  font-size: var(--ms-text-lg);
+  font-weight: var(--ms-weight-medium);
+  line-height: var(--ms-lh-tight);
+  color: var(--ms-fg-1);
+  margin: 0;
+}
+
+.ms-h4, h4.ms {
+  font-family: var(--ms-font-display);
+  font-size: var(--ms-text-md);
+  font-weight: var(--ms-weight-medium);
+  line-height: var(--ms-lh-tight);
+  color: var(--ms-fg-1);
+  margin: 0;
+}
+
+.ms-body, p.ms {
+  font-family: var(--ms-font-body);
+  font-size: var(--ms-text-base);
+  font-weight: var(--ms-weight-regular);
+  line-height: var(--ms-lh-body);
+  color: var(--ms-fg-1);
+  margin: 0;
+}
+
+.ms-body-sm {
+  font-size: var(--ms-text-sm);
+  color: var(--ms-fg-2);
+  line-height: var(--ms-lh-body);
+}
+
+.ms-caption {
+  font-size: var(--ms-text-xs);
+  color: var(--ms-fg-3);
+  line-height: var(--ms-lh-tight);
+}
+
+.ms-subtitle-en {
+  font-family: var(--ms-font-en);
+  font-size: var(--ms-text-sm);
+  font-weight: var(--ms-weight-regular);
+  letter-spacing: 0.02em;
+  color: var(--ms-fg-2);
+  line-height: var(--ms-lh-tight);
+}
+
+/* product / region label "name + dot" */
+.ms-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ms-space-2);
+  font-family: var(--ms-font-display);
+  font-size: var(--ms-text-md);
+  font-weight: var(--ms-weight-semibold);
+  color: var(--ms-fg-1);
+}
+.ms-label::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ms-status-dot);
+}
+
+/* tag pill (used on idea cards) */
+.ms-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--ms-radius-pill);
+  background: var(--ms-surface-2);
+  color: var(--ms-fg-2);
+  font-size: var(--ms-text-xs);
+  font-weight: var(--ms-weight-regular);
+  border: 1px solid var(--ms-surface-hairline);
+}

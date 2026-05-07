@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:28px; background: var(--ms-bg-canvas); display:flex; gap:20px; align-items:flex-start; }
+  .card { background: var(--ms-surface-1); border:1px solid var(--ms-surface-hairline); border-radius:24px; padding:20px 24px; box-shadow: var(--ms-shadow-glass); width: 380px; }
+  .head { display:flex; align-items:baseline; gap:10px; margin-bottom:6px; }
+  .h-cn { font-size:24px; font-weight:600; color: var(--ms-fg-1); }
+  .h-en { font-family:'Inter'; font-size:13px; color: var(--ms-fg-2); letter-spacing:0.02em; }
+  .desc { font-size:13px; color: var(--ms-fg-2); line-height:1.6; margin-bottom:18px; }
+  .meter-row { display:flex; justify-content:space-between; font-size:12px; color: var(--ms-fg-2); margin-bottom:8px; }
+  .meter-row .pct { color: var(--ms-fg-1); font-weight:600; }
+  .bar { height:6px; border-radius:999px; background: rgba(0,0,0,0.05); overflow:hidden; }
+  .fill { height:100%; width:72%; background: var(--ms-accent-gradient); border-radius:999px; }
+  .foot { font-size:11px; color: var(--ms-fg-3); margin-top:8px; }
+  /* suggest capsule */
+  .suggest { display:flex; align-items:center; gap:14px; padding:14px 18px; background: var(--ms-surface-1); border:1px solid var(--ms-surface-hairline); border-radius:999px; box-shadow: var(--ms-shadow-card); }
+  .suggest .icon { width:32px; height:32px; border-radius:999px; background: var(--ms-accent-gradient-soft); display:grid; place-items:center; }
+  .suggest .icon svg { stroke: var(--ms-fg-1); stroke-width:1.5; fill:none; }
+  .suggest .body { display:flex; flex-direction:column; }
+  .suggest .t { font-size:13px; font-weight:600; color: var(--ms-fg-1); }
+  .suggest .s { font-size:11px; color: var(--ms-fg-2); }
+  .suggest .chev { color: var(--ms-fg-3); margin-left:6px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="head"><div class="h-cn">前額葉皮質</div><div class="h-en">Prefrontal Cortex</div></div>
+  <div class="desc">負責規劃、決策、目標設定、時間管理與自我控制</div>
+  <div class="meter-row"><span>目前負荷狀態</span><span class="pct">偏高 · 72%</span></div>
+  <div class="bar"><div class="fill"></div></div>
+  <div class="foot">近期有較多規劃與決策任務</div>
+</div>
+<div class="suggest">
+  <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 2l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/></svg></div>
+  <div class="body"><div class="t">大腦清空計畫</div><div class="s">定期整理，讓靈感流動起來</div></div>
+  <div class="chev">›</div>
+</div>
+</body></html>

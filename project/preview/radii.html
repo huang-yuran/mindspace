@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:32px; background: var(--ms-bg-canvas); }
+  .row { display:flex; gap:24px; align-items:center; }
+  .item { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .shape { background: rgba(255,255,255,0.85); border:1px solid var(--ms-surface-hairline); width:80px; height:60px; }
+  .lbl { font-family:'Inter'; font-size:11px; color: var(--ms-fg-2); letter-spacing:0.04em;}
+  .r1 { border-radius:8px; }
+  .r2 { border-radius:16px; }
+  .r3 { border-radius:20px; }
+  .r4 { border-radius:28px; }
+  .pill { width:80px; height:40px; border-radius:999px; }
+</style></head>
+<body>
+<div class="row">
+  <div class="item"><div class="shape r1"></div><div class="lbl">sm · 8</div></div>
+  <div class="item"><div class="shape r2"></div><div class="lbl">md · 16</div></div>
+  <div class="item"><div class="shape r3"></div><div class="lbl">lg · 20</div></div>
+  <div class="item"><div class="shape r4"></div><div class="lbl">xl · 28</div></div>
+  <div class="item"><div class="shape pill"></div><div class="lbl">pill · 999</div></div>
+</div>
+</body></html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:24px; background: var(--ms-bg-canvas); }
+  .row { display:flex; gap:16px; align-items:stretch; }
+  .swatch { flex:1; border-radius: var(--ms-radius-md); padding:14px; min-height:120px; display:flex; flex-direction:column; justify-content:space-between; box-shadow: var(--ms-shadow-card); }
+  .big { flex: 1.6; }
+  .name { font-size:13px; font-weight:500; color: var(--ms-fg-1); }
+  .hex { font-family: 'Inter'; font-size:11px; color: var(--ms-fg-2); letter-spacing:0.04em; }
+  .iridescent { background: var(--ms-accent-gradient); }
+  .iridescent .name, .iridescent .hex { color: rgba(60,50,40,0.75); }
+  .glow { box-shadow: var(--ms-glow-accent), var(--ms-shadow-card); }
+</style></head>
+<body>
+<div class="row">
+  <div class="swatch big iridescent glow"><div class="name">accent gradient</div><div class="hex">135° · #BFD4FF → #C9B8FF → #FAC8E2</div></div>
+  <div class="swatch" style="background:#BFD4FF"><div class="name">accent-1</div><div class="hex">#BFD4FF</div></div>
+  <div class="swatch" style="background:#C9B8FF"><div class="name">accent-2</div><div class="hex">#C9B8FF</div></div>
+  <div class="swatch" style="background:#FAC8E2"><div class="name">accent-3</div><div class="hex">#FAC8E2</div></div>
+</div>
+</body></html>

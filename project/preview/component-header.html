@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:0; background: var(--ms-bg-canvas); }
+  .header { display:flex; align-items:center; padding:24px 32px; }
+  .brand { display:flex; flex-direction:column; }
+  .brand .name { display:inline-flex; align-items:center; gap:8px; font-size:24px; font-weight:600; color: var(--ms-fg-1); }
+  .brand .name::after { content:''; width:7px; height:7px; border-radius:999px; background: #6FA8E5; }
+  .brand .tag { font-size:13px; color: var(--ms-fg-2); margin-top:2px; }
+  .spacer { flex:1; }
+  .actions { display:flex; gap:14px; align-items:center; }
+  .icon { width:36px; height:36px; border-radius:999px; display:grid; place-items:center; cursor:pointer; }
+  .icon svg { stroke: var(--ms-fg-1); stroke-width:1.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .icon:hover { background: var(--ms-surface-2); }
+  .avatar { width:40px; height:40px; border-radius:999px; background: radial-gradient(circle at 35% 30%, #fff 0%, #c0b8d8 35%, #6a5a78 80%); box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1); }
+</style></head>
+<body>
+<div class="header">
+  <div class="brand"><div class="name">Mindspace</div><div class="tag">你的靈感宇宙</div></div>
+  <div class="spacer"></div>
+  <div class="actions">
+    <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+    <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7M10 21h4"/></svg></div>
+    <div class="avatar"></div>
+  </div>
+</div>
+</body></html>

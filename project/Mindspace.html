@@ -1,0 +1,1707 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<title>Mindspace · 你的靈感宇宙</title>
+<meta name="viewport" content="width=1440" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg: #F0F2F5;
+    --bg-2: #E8EAF0;
+    --ink: #1A1B2E;
+    --ink-2: #4B4D66;
+    --ink-3: #8689A3;
+    --ink-4: #B8BACC;
+    --line: #E4E6EE;
+    --card: #FFFFFF;
+    --violet-1: #8B9FE8;
+    --violet-2: #C4B5F4;
+    --violet-soft: #EEF0FF;
+    --violet-deep: #6B7BD0;
+    --shadow-sm: 0 2px 8px rgba(43, 50, 92, 0.06);
+    --shadow-md: 0 8px 32px rgba(43, 50, 92, 0.08);
+    --shadow-lg: 0 20px 60px rgba(43, 50, 92, 0.12);
+    --shadow-glow: 0 10px 40px rgba(139, 159, 232, 0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans TC", -apple-system, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body{
+    min-height: 100vh;
+    width: 1440px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .mono{font-family: "JetBrains Mono", monospace;}
+  button{font-family: inherit; cursor: pointer; border: none; background: none;}
+
+  /* ============ Ambient Background ============ */
+  .ambient{
+    position: fixed;
+    inset: 0;
+    width: 1440px;
+    margin: 0 auto;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .ambient::before, .ambient::after{
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+  }
+  .ambient::before{
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, #C4B5F4 0%, transparent 70%);
+    top: -200px; right: -150px;
+  }
+  .ambient::after{
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #8B9FE8 0%, transparent 70%);
+    bottom: -100px; left: 10%;
+    opacity: 0.35;
+  }
+
+  /* ============ Top Nav ============ */
+  .topnav{
+    position: relative;
+    z-index: 10;
+    height: 72px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-mark{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .brand-name{
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .brand-dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    box-shadow: 0 0 12px rgba(139, 159, 232, 0.6);
+    display: inline-block;
+    transform: translateY(-2px);
+  }
+  .brand-sub{
+    font-size: 13px;
+    color: var(--ink-3);
+    border-left: 1px solid var(--line);
+    padding-left: 14px;
+    letter-spacing: 0.02em;
+  }
+  .nav-back{
+    display: flex; align-items: center; gap: 14px;
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    cursor: pointer;
+  }
+  .nav-back .arrow{
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    display: grid; place-items: center;
+    font-size: 16px; color: var(--ink-2);
+    transition: all .2s;
+  }
+  .nav-back:hover .arrow{
+    background: var(--violet-soft);
+    color: var(--violet-deep);
+  }
+
+  .nav-tabs{
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.8);
+    padding: 4px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-tab{
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+    border-radius: 999px;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover{ color: var(--ink); }
+  .nav-tab.active{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white;
+    box-shadow: 0 4px 14px rgba(139, 159, 232, 0.4);
+  }
+
+  .nav-tools{
+    display: flex; align-items: center; gap: 12px;
+  }
+  .icon-btn{
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.9);
+    display: grid; place-items: center;
+    color: var(--ink-2);
+    transition: all .2s;
+  }
+  .icon-btn:hover{
+    background: white;
+    color: var(--violet-deep);
+    box-shadow: var(--shadow-sm);
+  }
+  .avatar{
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C8CAD4, #9FA2B5);
+    display: grid; place-items: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ============ Sidebar (左側工具列) ============ */
+  .sidebar{
+    position: absolute;
+    left: 32px;
+    top: 110px;
+    width: 88px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+  }
+  .sidebar-item{
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .sb-btn{
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    display: grid; place-items: center;
+    color: var(--ink-2);
+    transition: all .2s;
+    border: 1px solid var(--line);
+  }
+  .sb-btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .sb-btn.primary{
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white;
+    box-shadow: var(--shadow-glow);
+    border: none;
+    font-size: 28px;
+    font-weight: 300;
+  }
+  .sb-btn.primary:hover{ transform: translateY(-2px) scale(1.05); }
+  .sb-label{
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ Page Container ============ */
+  .page{
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 72px);
+    display: none;
+  }
+  .page.active{ display: block; }
+
+  /* ============ Page 1: Home ============ */
+  .home-stage{
+    position: relative;
+    height: calc(100vh - 72px);
+    min-height: 880px;
+    width: 100%;
+  }
+  .home-headline{
+    position: absolute;
+    top: 80px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 6;
+    pointer-events: none;
+  }
+  .home-headline h1{
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .home-headline h1 .accent{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .home-headline p{
+    font-size: 16px;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+  }
+
+  .brain-stage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-46%, -45%);
+    width: 980px;
+    height: 720px;
+    z-index: 2;
+  }
+  .brain-svg{
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+  }
+  .brain-glow{
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 45% at 50% 50%, rgba(196, 181, 244, 0.35) 0%, rgba(139, 159, 232, 0.15) 40%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  .float-card{
+    position: absolute;
+    width: 110px;
+    cursor: pointer;
+    z-index: 4;
+    animation: float 6s ease-in-out infinite;
+    transition: transform .25s ease;
+  }
+  .float-card:hover{ transform: scale(1.08) translateY(-4px); z-index: 7;}
+  .float-card .thumb{
+    width: 110px; height: 110px;
+    border-radius: 18px;
+    background: var(--violet-soft);
+    box-shadow: 0 8px 24px rgba(43,50,92,0.12), 0 0 0 1px rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+  }
+  .float-card .label{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    width: 100%;
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* placeholder thumbs */
+  .ph{
+    width: 100%; height: 100%;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.95);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 6px;
+    line-height: 1.4;
+    position: relative;
+  }
+  .ph::before{
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, transparent 0 8px, rgba(255,255,255,0.08) 8px 9px);
+  }
+  .ph-1{ background: linear-gradient(135deg, #FF8B7A, #E85D75); }
+  .ph-2{ background: linear-gradient(135deg, #2D3142, #4F5D75); }
+  .ph-3{ background: linear-gradient(135deg, #D4A574, #B8896A); }
+  .ph-4{ background: linear-gradient(135deg, #5DA9E9, #8B9FE8); }
+  .ph-5{ background: linear-gradient(135deg, #6FA86F, #94B89C); }
+  .ph-6{ background: linear-gradient(135deg, #87A86F, #BFD085); }
+  .ph-7{ background: linear-gradient(135deg, #E8B57A, #D4956A); }
+  .ph-8{ background: linear-gradient(135deg, #C9B89E, #9F8A6F); }
+
+  .home-bottom{
+    position: absolute;
+    bottom: 36px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
+  }
+  .down-cta{
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    cursor: pointer;
+    color: var(--ink-2);
+    transition: all .2s;
+  }
+  .down-cta:hover{ color: var(--violet-deep); transform: translateY(2px); }
+  .down-arrow{
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: var(--shadow-md);
+    display: grid; place-items: center;
+    color: var(--violet-deep);
+    animation: bounce 2.4s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  .down-cta span{
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .clean-card{
+    position: absolute;
+    right: 32px;
+    bottom: 36px;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all .2s;
+    z-index: 7;
+  }
+  .clean-card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .clean-card .star{
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    display: grid; place-items: center;
+    color: white;
+    font-size: 14px;
+  }
+  .clean-card .ct{
+    display: flex; flex-direction: column;
+  }
+  .clean-card .ct-t{ font-size: 13px; font-weight: 600; color: var(--ink); }
+  .clean-card .ct-d{ font-size: 11px; color: var(--ink-3); margin-top: 2px;}
+  .clean-card .chev{ color: var(--ink-3); margin-left: 4px;}
+
+  /* ============ Empty State ============ */
+  .empty-brain{
+    position: absolute;
+    left: 50%; top: 54%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+    pointer-events: auto;
+    width: 360px;
+  }
+  .empty-quiet{
+    font-size: 28px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .empty-title{
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    letter-spacing: -0.01em; margin-bottom: 6px;
+  }
+  .empty-sub{
+    font-size: 13px; color: var(--ink-3); margin-bottom: 22px;
+  }
+  .empty-cta{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white; font-weight: 600; font-size: 14px;
+    padding: 12px 24px; border-radius: 999px;
+    box-shadow: var(--shadow-glow);
+    cursor: pointer; transition: all .2s;
+  }
+  .empty-cta:hover{ transform: translateY(-2px); }
+  .list-empty{
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--ink-3);
+  }
+  .list-empty .le-title{
+    font-size: 18px; font-weight: 700; color: var(--ink-2); margin-bottom: 8px;
+  }
+  .list-empty .le-sub{ font-size: 13px; }
+
+  /* ============ List View ============ */
+  .list-view{
+    display: none;
+    position: relative;
+    z-index: 4;
+    max-width: 920px;
+    margin: 40px auto 0;
+    padding-bottom: 80px;
+  }
+  body.list-mode .home-stage .brain-stage,
+  body.list-mode .home-stage .home-headline,
+  body.list-mode .home-stage .home-bottom,
+  body.list-mode .home-stage .clean-card{ display: none; }
+  body.list-mode .home-stage{ height: auto; min-height: 0; padding-top: 12px;}
+  body.list-mode .list-view{ display: block; }
+
+  .list-head{
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  .list-head h2{
+    font-size: 36px; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .list-sub{ font-size: 14px; color: var(--ink-3); }
+  .list-meta{
+    font-size: 11px; color: var(--ink-3); letter-spacing: 0.08em;
+    text-transform: lowercase;
+  }
+  .list-rows{ display: flex; flex-direction: column; gap: 12px; }
+  .list-row{
+    background: white;
+    border-radius: 20px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(255,255,255,0.9);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .list-row:hover{
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(139, 159, 232, 0.3);
+  }
+  .list-row .lr-thumb{
+    width: 80px; height: 80px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .list-row .lr-title{
+    font-size: 18px; font-weight: 700; color: var(--ink);
+    margin-bottom: 4px; letter-spacing: -0.01em;
+  }
+  .list-row .lr-desc{
+    font-size: 13px; color: var(--ink-2); margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .list-row .lr-meta{ display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .list-row .lr-time{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .list-row .lr-region{
+    font-size: 10px;
+    color: var(--violet-deep);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+    display: flex; align-items: center; gap: 4px;
+    justify-content: flex-end;
+  }
+  .list-row .lr-region::before{
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+  }
+
+  /* ============ Page 2: Brain Region ============ */
+  .region-page{
+    padding: 24px 40px 60px 40px;
+    display: grid;
+    grid-template-columns: 96px 1fr 540px;
+    gap: 24px;
+    min-height: calc(100vh - 72px);
+  }
+  .region-sidenav{
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: center;
+    padding-top: 20px;
+  }
+  .region-icon{
+    width: 64px;
+    padding: 12px 8px;
+    border-radius: 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: all .2s;
+    color: var(--ink-3);
+  }
+  .region-icon:hover{ background: rgba(255,255,255,0.6); color: var(--ink-2); }
+  .region-icon.active{
+    background: white;
+    box-shadow: var(--shadow-sm);
+    color: var(--violet-deep);
+  }
+  .region-icon .ri-shape{
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--bg-2);
+    display: grid; place-items: center;
+  }
+  .region-icon.active .ri-shape{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 159, 232, 0.4);
+  }
+  .region-icon .ri-label{
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+  }
+
+  .region-brain{
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(238, 240, 255, 0.6) 100%);
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.8);
+    overflow: hidden;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .region-brain-glow{
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(196, 181, 244, 0.4) 0%, rgba(139, 159, 232, 0.15) 50%, transparent 80%);
+    filter: blur(30px);
+  }
+  .region-brain svg{ position: relative; z-index: 2; max-width: 90%; max-height: 90%;}
+  .region-brain-meta{
+    position: absolute;
+    left: 28px; top: 28px;
+    z-index: 3;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .region-brain-meta .tag{
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--ink-2);
+    box-shadow: var(--shadow-sm);
+    width: fit-content;
+  }
+  .region-brain-meta .tag .dot{
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--violet-1);
+    margin-right: 6px;
+    transform: translateY(-1px);
+  }
+
+  .region-info{
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .info-card{
+    background: white;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255,255,255,0.9);
+  }
+  .region-title{
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .region-en{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--violet-deep);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .region-desc{
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .load-row{
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .load-label{ font-size: 12px; color: var(--ink-3); font-weight: 500;}
+  .load-state{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--violet-deep);
+  }
+  .load-bar{
+    height: 8px;
+    background: var(--bg-2);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .load-fill{
+    height: 100%;
+    background: linear-gradient(90deg, var(--violet-1), var(--violet-2));
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(139, 159, 232, 0.5);
+    transition: width .6s ease;
+  }
+  .load-note{ font-size: 12px; color: var(--ink-3);}
+
+  .section-h{
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-h::before{
+    content: "";
+    width: 4px; height: 14px;
+    background: linear-gradient(180deg, var(--violet-1), var(--violet-2));
+    border-radius: 2px;
+  }
+  .section-count{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 400;
+    margin-left: auto;
+  }
+
+  .idea-list{ display: flex; flex-direction: column; gap: 10px; }
+  .idea-card{
+    background: white;
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .idea-card:hover{
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(139, 159, 232, 0.3);
+  }
+  .idea-thumb{
+    width: 64px; height: 64px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .idea-body{ flex: 1; min-width: 0;}
+  .idea-title{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .idea-desc{
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+  .idea-meta{
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+  }
+  .chip{
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--violet-soft);
+    color: var(--violet-deep);
+    font-weight: 500;
+  }
+  .idea-time{
+    font-size: 11px;
+    color: var(--ink-4);
+    font-family: "JetBrains Mono", monospace;
+    margin-left: auto;
+  }
+
+  .balance-card{
+    background: linear-gradient(135deg, #F4F2FF 0%, #E8EAF8 100%);
+    border-radius: 24px;
+    padding: 22px;
+    border: 1px solid rgba(196, 181, 244, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .balance-card::before{
+    content: "";
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 181, 244, 0.5) 0%, transparent 70%);
+    filter: blur(20px);
+  }
+  .balance-text{
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    position: relative;
+    font-weight: 500;
+  }
+  .balance-actions{ display: flex; gap: 8px; flex-wrap: wrap; position: relative;}
+  .pill{
+    background: white;
+    color: var(--ink-2);
+    border: 1px solid rgba(255,255,255,0.9);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .pill:hover{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  /* ============ Modal ============ */
+  .modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 27, 46, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show{ display: flex; }
+  .modal{
+    width: 480px;
+    background: white;
+    border-radius: 28px;
+    padding: 36px;
+    box-shadow: 0 30px 80px rgba(43, 50, 92, 0.25);
+    transform: scale(.96);
+    opacity: 0;
+    transition: all .25s ease;
+  }
+  .modal-overlay.show .modal{ transform: scale(1); opacity: 1;}
+  .modal-h{
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .modal-h .em{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .modal-sub{
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-bottom: 22px;
+  }
+  .modal textarea{
+    width: 100%;
+    height: 120px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    transition: all .2s;
+    line-height: 1.6;
+  }
+  .modal textarea::placeholder{ color: var(--ink-4); }
+  .modal textarea:focus{
+    border-color: var(--violet-1);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(139, 159, 232, 0.12);
+  }
+  .modal-tags{
+    display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;
+  }
+  .modal-tag{
+    font-size: 11px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .modal-tag:hover, .modal-tag.on{
+    background: var(--violet-soft);
+    color: var(--violet-deep);
+    border-color: rgba(139, 159, 232, 0.3);
+  }
+  .modal-actions{
+    display: flex; gap: 10px; justify-content: flex-end;
+    margin-top: 22px;
+  }
+  .btn{
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-ghost{
+    background: var(--bg);
+    color: var(--ink-2);
+  }
+  .btn-ghost:hover{ background: var(--bg-2); }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--violet-1), var(--violet-2));
+    color: white;
+    box-shadow: var(--shadow-glow);
+  }
+  .btn-primary:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 14px 40px rgba(139, 159, 232, 0.5);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- ====================== PAGE 1: HOME ====================== -->
+<div class="page active" id="page-home" data-screen-label="01 首頁 Home">
+  <header class="topnav">
+    <div class="brand">
+      <div class="brand-mark">
+        <span class="brand-name">Mindspace</span>
+        <span class="brand-dot"></span>
+      </div>
+      <div class="brand-sub">你的靈感宇宙</div>
+    </div>
+    <div class="nav-tools">
+      <button class="icon-btn" aria-label="搜尋">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="通知">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      </button>
+      <div class="avatar">YC</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-item" id="open-add">
+      <div class="sb-btn primary">＋</div>
+      <div class="sb-label">新增靈感</div>
+    </div>
+    <div class="sidebar-item" id="toggle-view">
+      <div class="sb-btn" id="toggle-view-btn">
+        <svg id="icon-list" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>
+      </div>
+      <div class="sb-label" id="toggle-view-label">清單檢視</div>
+    </div>
+    <div class="sidebar-item" onclick="goToRegion()">
+      <div class="sb-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="sb-label">靈感地圖</div>
+    </div>
+    <div class="sidebar-item">
+      <div class="sb-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </div>
+      <div class="sb-label">清空大腦</div>
+    </div>
+  </aside>
+
+  <main class="home-stage">
+    <div class="home-headline">
+      <h1>歡迎回來，<span class="accent">創造者。</span></h1>
+      <p>這裡收藏著你曾經想嘗試的所有可能性。</p>
+    </div>
+
+    <div class="brain-stage">
+      <div class="brain-glow"></div>
+      <svg class="brain-svg" viewBox="0 0 980 720" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="brainFill" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#C4B5F4" stop-opacity="0.35"/>
+            <stop offset="60%" stop-color="#8B9FE8" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#8B9FE8" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="brainStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B9FE8" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#C4B5F4" stop-opacity="0.4"/>
+          </linearGradient>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Brain silhouette: two hemispheres with gyri suggestion -->
+        <g filter="url(#softGlow)" opacity="0.95">
+          <!-- Outer brain shape -->
+          <path d="M490 90
+                   C 360 90, 250 145, 210 230
+                   C 165 245, 130 285, 130 340
+                   C 130 380, 150 410, 175 425
+                   C 165 460, 180 510, 220 540
+                   C 215 580, 250 620, 305 625
+                   C 340 645, 410 650, 490 645
+                   C 570 650, 640 645, 675 625
+                   C 730 620, 765 580, 760 540
+                   C 800 510, 815 460, 805 425
+                   C 830 410, 850 380, 850 340
+                   C 850 285, 815 245, 770 230
+                   C 730 145, 620 90, 490 90 Z"
+                fill="url(#brainFill)" stroke="url(#brainStroke)" stroke-width="1.5"/>
+
+          <!-- Central fissure -->
+          <path d="M490 95 C 488 200, 495 320, 490 450 C 488 540, 492 620, 490 640"
+                stroke="url(#brainStroke)" stroke-width="1" fill="none" opacity="0.5"/>
+
+          <!-- Gyri / sulci suggestions, left -->
+          <path d="M210 230 C 250 220, 290 230, 330 250 C 370 245, 400 260, 420 290" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.35"/>
+          <path d="M175 350 C 220 340, 270 360, 310 360 C 360 365, 410 355, 450 380" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.35"/>
+          <path d="M195 440 C 240 450, 290 440, 340 460 C 390 450, 430 470, 470 470" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.35"/>
+          <path d="M250 540 C 300 530, 360 555, 410 545 C 450 555, 480 545, 488 540" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.35"/>
+
+          <!-- Gyri right -->
+          <path d="M770 230 C 730 220, 690 230, 650 250 C 610 245, 580 260, 560 290" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M805 350 C 760 340, 710 360, 670 360 C 620 365, 570 355, 530 380" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M785 440 C 740 450, 690 440, 640 460 C 590 450, 550 470, 510 470" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M730 540 C 680 530, 620 555, 570 545 C 530 555, 500 545, 492 540" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.4"/>
+        </g>
+
+        <!-- Neural network: nodes & connecting lines -->
+        <g opacity="0.55">
+          <!-- connections -->
+          <g stroke="#8B9FE8" stroke-width="0.6" fill="none">
+            <line x1="280" y1="260" x2="380" y2="220"/>
+            <line x1="380" y1="220" x2="500" y2="280"/>
+            <line x1="500" y1="280" x2="620" y2="240"/>
+            <line x1="620" y1="240" x2="720" y2="290"/>
+            <line x1="280" y1="260" x2="220" y2="380"/>
+            <line x1="220" y1="380" x2="320" y2="430"/>
+            <line x1="320" y1="430" x2="440" y2="400"/>
+            <line x1="440" y1="400" x2="560" y2="430"/>
+            <line x1="560" y1="430" x2="680" y2="400"/>
+            <line x1="680" y1="400" x2="760" y2="380"/>
+            <line x1="380" y1="220" x2="320" y2="430"/>
+            <line x1="500" y1="280" x2="440" y2="400"/>
+            <line x1="620" y1="240" x2="560" y2="430"/>
+            <line x1="320" y1="430" x2="380" y2="540"/>
+            <line x1="380" y1="540" x2="500" y2="510"/>
+            <line x1="500" y1="510" x2="620" y2="540"/>
+            <line x1="620" y1="540" x2="680" y2="400"/>
+            <line x1="380" y1="540" x2="440" y2="400"/>
+            <line x1="500" y1="510" x2="560" y2="430"/>
+          </g>
+          <g fill="#8B9FE8">
+            <circle cx="280" cy="260" r="3"/>
+            <circle cx="380" cy="220" r="3.5"/>
+            <circle cx="500" cy="280" r="4" fill="#C4B5F4"/>
+            <circle cx="620" cy="240" r="3.5"/>
+            <circle cx="720" cy="290" r="3"/>
+            <circle cx="220" cy="380" r="3"/>
+            <circle cx="320" cy="430" r="4" fill="#C4B5F4"/>
+            <circle cx="440" cy="400" r="3.5"/>
+            <circle cx="560" cy="430" r="4" fill="#C4B5F4"/>
+            <circle cx="680" cy="400" r="3.5"/>
+            <circle cx="760" cy="380" r="3"/>
+            <circle cx="380" cy="540" r="3"/>
+            <circle cx="500" cy="510" r="3.5"/>
+            <circle cx="620" cy="540" r="3"/>
+          </g>
+          <!-- pulse highlights -->
+          <g fill="#FFFFFF">
+            <circle cx="500" cy="280" r="1.5" opacity="0.9"/>
+            <circle cx="320" cy="430" r="1.5" opacity="0.9"/>
+            <circle cx="560" cy="430" r="1.5" opacity="0.9"/>
+          </g>
+        </g>
+      </svg>
+
+      <!-- 8 Floating Idea Cards distributed within brain silhouette -->
+      <div class="empty-brain" id="empty-brain">
+        <div class="empty-quiet">✨</div>
+        <div class="empty-title">大腦已清空</div>
+        <div class="empty-sub">這是你下一個靈感誕生的地方。</div>
+        <button class="empty-cta" onclick="document.getElementById('open-add').click()">＋新增你的第一個靈感</button>
+      </div>
+    </div>
+
+    <div class="home-bottom">
+      <div class="down-cta" onclick="goToRegion()">
+        <div class="down-arrow">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </div>
+        <span>探索你的靈感宇宙</span>
+      </div>
+    </div>
+
+    <div class="clean-card">
+      <div class="star">✦</div>
+      <div class="ct">
+        <div class="ct-t">大腦清空計畫</div>
+        <div class="ct-d">定期整理，讓靈感流動起來</div>
+      </div>
+      <div class="chev">›</div>
+    </div>
+
+    <!-- List View -->
+    <section class="list-view" id="list-view">
+      <div class="list-head">
+        <div>
+          <h2>靈感清單</h2>
+          <p class="list-sub">從最近到較舊。點擊任一條以記錄細節。</p>
+        </div>
+        <div class="list-meta mono"><span id="list-count">08</span> ideas · sorted by recent</div>
+      </div>
+      <div class="list-rows" id="list-rows"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ====================== PAGE 2: REGION ====================== -->
+<div class="page" id="page-region" data-screen-label="02 腦區 Region">
+  <header class="topnav">
+    <div class="nav-back" onclick="goToHome()">
+      <span class="arrow">←</span>
+      <div class="brand-mark">
+        <span class="brand-name">Mindspace</span>
+        <span class="brand-dot"></span>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" id="region-tabs">
+      <button class="nav-tab active" data-region="prefrontal">前額葉皮質</button>
+      <button class="nav-tab" data-region="hippocampus">海馬迴</button>
+      <button class="nav-tab" data-region="parietal">頂葉</button>
+      <button class="nav-tab" data-region="dmn">預設模式網路</button>
+      <button class="nav-tab" data-region="reward">獎勵系統</button>
+    </nav>
+
+    <div class="nav-tools">
+      <button class="icon-btn" aria-label="搜尋">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="通知">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      </button>
+      <div class="avatar">YC</div>
+    </div>
+  </header>
+
+  <main class="region-page">
+    <!-- 左側 region nav -->
+    <div class="region-sidenav" id="region-sidenav">
+      <div class="region-icon active" data-region="prefrontal">
+        <div class="ri-shape">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 10h6M9 14h4"/></svg>
+        </div>
+        <div class="ri-label">前額葉<br/>皮質</div>
+      </div>
+      <div class="region-icon" data-region="hippocampus">
+        <div class="ri-shape">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12c0-4 3-7 7-7s7 3 7 7-3 7-7 7c-2 0-4-1-5-2"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div class="ri-label">海馬迴</div>
+      </div>
+      <div class="region-icon" data-region="parietal">
+        <div class="ri-shape">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9-9 9z"/></svg>
+        </div>
+        <div class="ri-label">頂葉</div>
+      </div>
+      <div class="region-icon" data-region="dmn">
+        <div class="ri-shape">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M4 12h4M16 12h4M12 4v4M12 16v4"/></svg>
+        </div>
+        <div class="ri-label">預設模<br/>式網路</div>
+      </div>
+      <div class="region-icon" data-region="reward">
+        <div class="ri-shape">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>
+        </div>
+        <div class="ri-label">獎勵系統</div>
+      </div>
+    </div>
+
+    <!-- 中央：大腦視覺 -->
+    <section class="region-brain">
+      <div class="region-brain-glow"></div>
+      <div class="region-brain-meta">
+        <div class="tag"><span class="dot"></span><span id="region-tag-en">PREFRONTAL CORTEX</span></div>
+        <div class="tag" style="margin-top:4px;">
+          <span class="dot" style="background: var(--violet-2);"></span>
+          <span>active region · 即時投影</span>
+        </div>
+      </div>
+
+      <svg viewBox="0 0 700 620" width="700" height="620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="rBrainFill" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#C4B5F4" stop-opacity="0.4"/>
+            <stop offset="60%" stop-color="#8B9FE8" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#8B9FE8" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="rBrainStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B9FE8" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#C4B5F4" stop-opacity="0.5"/>
+          </linearGradient>
+          <radialGradient id="hotspot" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#C4B5F4" stop-opacity="0.95"/>
+            <stop offset="60%" stop-color="#8B9FE8" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#8B9FE8" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <g filter="url(#glow2)">
+          <path d="M350 60
+                   C 230 60, 130 110, 95 190
+                   C 55 205, 25 245, 30 295
+                   C 35 335, 55 365, 85 380
+                   C 75 415, 95 460, 135 488
+                   C 130 528, 165 568, 215 575
+                   C 250 595, 305 600, 350 595
+                   C 395 600, 450 595, 485 575
+                   C 535 568, 570 528, 565 488
+                   C 605 460, 625 415, 615 380
+                   C 645 365, 665 335, 670 295
+                   C 675 245, 645 205, 605 190
+                   C 570 110, 470 60, 350 60 Z"
+                fill="url(#rBrainFill)" stroke="url(#rBrainStroke)" stroke-width="1.5"/>
+          <path d="M350 65 C 348 180, 355 320, 350 460 C 348 540, 352 580, 350 590"
+                stroke="url(#rBrainStroke)" stroke-width="1" fill="none" opacity="0.5"/>
+
+          <!-- gyri left -->
+          <path d="M95 190 C 140 180, 200 195, 250 215 C 290 215, 320 230, 340 260" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M85 300 C 140 290, 200 310, 250 310 C 290 315, 320 305, 345 320" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M105 400 C 160 410, 220 400, 270 420 C 310 410, 330 425, 348 425" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M165 500 C 215 490, 275 510, 320 500 C 340 510, 348 503, 350 500" stroke="#8B9FE8" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <!-- gyri right -->
+          <path d="M605 190 C 560 180, 500 195, 450 215 C 410 215, 380 230, 360 260" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.45"/>
+          <path d="M615 300 C 560 290, 500 310, 450 310 C 410 315, 380 305, 355 320" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.45"/>
+          <path d="M595 400 C 540 410, 480 400, 430 420 C 390 410, 370 425, 352 425" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.45"/>
+          <path d="M535 500 C 485 490, 425 510, 380 500 C 360 510, 352 503, 350 500" stroke="#C4B5F4" stroke-width="0.8" fill="none" opacity="0.45"/>
+        </g>
+
+        <!-- Active hotspot for prefrontal area (front/top) -->
+        <ellipse id="hotspotEl" cx="350" cy="160" rx="180" ry="90" fill="url(#hotspot)" opacity="0.85"/>
+
+        <!-- nodes -->
+        <g opacity="0.7">
+          <g stroke="#8B9FE8" stroke-width="0.6" fill="none">
+            <line x1="200" y1="180" x2="280" y2="140"/>
+            <line x1="280" y1="140" x2="350" y2="180"/>
+            <line x1="350" y1="180" x2="430" y2="140"/>
+            <line x1="430" y1="140" x2="500" y2="180"/>
+            <line x1="200" y1="180" x2="240" y2="290"/>
+            <line x1="240" y1="290" x2="350" y2="320"/>
+            <line x1="350" y1="320" x2="460" y2="290"/>
+            <line x1="460" y1="290" x2="500" y2="180"/>
+            <line x1="240" y1="290" x2="320" y2="420"/>
+            <line x1="320" y1="420" x2="380" y2="420"/>
+            <line x1="380" y1="420" x2="460" y2="290"/>
+            <line x1="320" y1="420" x2="350" y2="510"/>
+            <line x1="350" y1="510" x2="380" y2="420"/>
+          </g>
+          <g fill="#8B9FE8">
+            <circle cx="200" cy="180" r="3"/>
+            <circle cx="280" cy="140" r="4" fill="#C4B5F4"/>
+            <circle cx="350" cy="180" r="4.5" fill="#C4B5F4"/>
+            <circle cx="430" cy="140" r="4" fill="#C4B5F4"/>
+            <circle cx="500" cy="180" r="3"/>
+            <circle cx="240" cy="290" r="3.5"/>
+            <circle cx="350" cy="320" r="4"/>
+            <circle cx="460" cy="290" r="3.5"/>
+            <circle cx="320" cy="420" r="3"/>
+            <circle cx="380" cy="420" r="3"/>
+            <circle cx="350" cy="510" r="3"/>
+          </g>
+          <g fill="white">
+            <circle cx="280" cy="140" r="1.5"/>
+            <circle cx="350" cy="180" r="1.8"/>
+            <circle cx="430" cy="140" r="1.5"/>
+          </g>
+        </g>
+      </svg>
+    </section>
+
+    <!-- 右側資訊面板 -->
+    <aside class="region-info">
+      <div class="info-card">
+        <div class="region-title" id="region-title">前額葉皮質</div>
+        <div class="region-en" id="region-en">Prefrontal Cortex</div>
+        <div class="region-desc" id="region-desc">負責規劃、決策、目標設定、時間管理與自我控制。</div>
+
+        <div class="load-row">
+          <span class="load-label">目前負荷狀態</span>
+          <span class="load-state" id="load-state">偏高</span>
+        </div>
+        <div class="load-bar">
+          <div class="load-fill" id="load-fill" style="width: 72%;"></div>
+        </div>
+        <div class="load-note" id="load-note">近期有較多規劃與決策任務</div>
+      </div>
+
+      <div>
+        <div class="section-h">
+          在此區域的靈感
+          <span class="section-count" id="idea-count">03 ideas</span>
+        </div>
+        <div class="idea-list" id="idea-list">
+          <!-- ideas injected via JS -->
+        </div>
+      </div>
+
+      <div>
+        <div class="section-h">建議平衡</div>
+        <div class="balance-card">
+          <div class="balance-text" id="balance-text">你的前額葉正在高負荷運作，建議安排恢復型活動。</div>
+          <div class="balance-actions" id="balance-actions">
+            <button class="pill">散步</button>
+            <button class="pill">冥想</button>
+            <button class="pill">創作</button>
+            <button class="pill">運動</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<!-- ====================== MODAL ====================== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-h">放入<span class="em">大腦</span></div>
+    <div class="modal-sub">捕捉這一刻浮現的可能性，之後再去探索。</div>
+    <textarea placeholder="此刻腦中浮現什麼..." id="modal-input"></textarea>
+    <div class="modal-tags" id="modal-tags">
+      <span class="modal-tag">規劃</span>
+      <span class="modal-tag">創作</span>
+      <span class="modal-tag">學習</span>
+      <span class="modal-tag">產品</span>
+      <span class="modal-tag">生活</span>
+      <span class="modal-tag">副業</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-cancel">取消</button>
+      <button class="btn btn-primary" id="btn-submit">放入大腦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== DETAIL MODAL ====================== -->
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal" role="dialog" aria-modal="true" style="width: 520px;">
+    <div style="display:flex; gap:14px; align-items:flex-start; margin-bottom: 18px;">
+      <div id="detail-thumb" style="width:56px;height:56px;border-radius:14px;overflow:hidden;flex-shrink:0;"></div>
+      <div style="flex:1; min-width:0;">
+        <div class="modal-h" style="font-size:20px;" id="detail-title">靈感標題</div>
+        <div class="modal-sub" style="margin-bottom:0;" id="detail-sub">補充這個靈感的細節、靈感來源或下一步。</div>
+      </div>
+    </div>
+    <textarea placeholder="關於這個靈感，還想到了什麼？" id="detail-input"></textarea>
+    <div class="modal-tags" id="detail-existing" style="margin-top:10px;"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="detail-cancel">取消</button>
+      <button class="btn btn-primary" id="detail-save">儲存細節</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========= 頁面切換 =========
+  function goToRegion(){
+    document.getElementById('page-home').classList.remove('active');
+    document.getElementById('page-region').classList.add('active');
+    window.scrollTo({top:0});
+  }
+  function goToHome(){
+    document.getElementById('page-region').classList.remove('active');
+    document.getElementById('page-home').classList.add('active');
+    window.scrollTo({top:0});
+  }
+
+  // ========= Modal =========
+  const modal = document.getElementById('modal');
+  document.getElementById('open-add').addEventListener('click', ()=>{
+    modal.classList.add('show');
+    setTimeout(()=>document.getElementById('modal-input').focus(), 200);
+  });
+  document.getElementById('btn-cancel').addEventListener('click', ()=> modal.classList.remove('show'));
+  document.getElementById('btn-submit').addEventListener('click', ()=>{
+    const v = document.getElementById('modal-input').value.trim();
+    const selectedTags = [...document.querySelectorAll('#modal-tags .modal-tag.on')].map(t=>t.textContent);
+    if(v){
+      addIdea(v, selectedTags);
+    }
+    document.getElementById('modal-input').value = '';
+    document.querySelectorAll('#modal-tags .modal-tag').forEach(t=>t.classList.remove('on'));
+    modal.classList.remove('show');
+  });
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('show'); });
+  document.querySelectorAll('#modal-tags .modal-tag').forEach(t=>{
+    t.addEventListener('click', ()=> t.classList.toggle('on'));
+  });
+
+  // ========= 細節 Modal =========
+  const detailModal = document.getElementById('detail-modal');
+  function openDetail({title, ph, phText, tags}){
+    document.getElementById('detail-title').textContent = title;
+    document.getElementById('detail-sub').textContent = '補充這個靈感的細節、想法或下一步。';
+    const thumb = document.getElementById('detail-thumb');
+    thumb.innerHTML = `<div class="ph ${ph||'ph-4'}">${phText||''}</div>`;
+    const ex = document.getElementById('detail-existing');
+    ex.innerHTML = (tags||[]).map(t=>`<span class="modal-tag on">${t}</span>`).join('');
+    document.getElementById('detail-input').value = '';
+    detailModal.classList.add('show');
+    setTimeout(()=>document.getElementById('detail-input').focus(), 200);
+  }
+  document.getElementById('detail-cancel').addEventListener('click', ()=> detailModal.classList.remove('show'));
+  document.getElementById('detail-save').addEventListener('click', ()=> detailModal.classList.remove('show'));
+  detailModal.addEventListener('click', (e)=>{ if(e.target===detailModal) detailModal.classList.remove('show'); });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape' && detailModal.classList.contains('show')) detailModal.classList.remove('show');
+  });
+
+  // 首頁漂浮卡片點擊
+  document.querySelectorAll('#page-home .float-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const title = card.querySelector('.label').textContent.trim();
+      const phEl = card.querySelector('.ph');
+      const ph = [...phEl.classList].find(c=>c.startsWith('ph-'));
+      openDetail({title, ph, phText: phEl.innerHTML, tags: []});
+    });
+  });
+
+  // ========= 清單視圖切換 =========
+  const HOME_IDEAS = [];
+  const PH_COLORS = ['ph-1','ph-2','ph-3','ph-4','ph-5','ph-6','ph-7','ph-8'];
+  const FLOAT_POSITIONS = [
+    {left: 130, top: 200}, {left: 320, top: 130}, {left: 530, top: 170},
+    {left: 720, top: 210}, {left: 200, top: 380}, {left: 410, top: 350},
+    {left: 615, top: 360}, {left: 320, top: 525},
+  ];
+  function guessRegion(text, tags){
+    const all = (text + ' ' + tags.join(' ')).toLowerCase();
+    if(/規劃|決策|目標|plan/i.test(all)) return '前額葉皮質';
+    if(/回憶|記憶|學習|文化/i.test(all)) return '海馬迴';
+    if(/空間|房間|家具|植物/i.test(all)) return '頂葉';
+    if(/創作|想像|寫作|畫/i.test(all)) return '預設模式網路';
+    if(/獎勵|慶祝|旅行|副業/i.test(all)) return '獎勵系統';
+    return '前額葉皮質';
+  }
+  function addIdea(title, tags){
+    const ph = PH_COLORS[HOME_IDEAS.length % PH_COLORS.length];
+    const phText = title.length > 8 ? title.slice(0,4)+'<br/>'+title.slice(4,8) : title;
+    HOME_IDEAS.unshift({
+      t: title,
+      d: tags.length ? '標籤：' + tags.join('、') : '這個靈感剛剛被放進大腦。',
+      tags: tags.length ? tags : ['新靈感'],
+      time: '剛剛',
+      region: guessRegion(title, tags),
+      ph,
+      phText,
+    });
+    renderFloatingCards();
+    renderListView();
+  }
+  function renderFloatingCards(){
+    const stage = document.querySelector('.brain-stage');
+    const empty = document.getElementById('empty-brain');
+    // remove existing
+    stage.querySelectorAll('.float-card').forEach(c=>c.remove());
+    if(!HOME_IDEAS.length){
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    HOME_IDEAS.slice(0, FLOAT_POSITIONS.length).forEach((idea, idx)=>{
+      const pos = FLOAT_POSITIONS[idx];
+      const el = document.createElement('div');
+      el.className = 'float-card';
+      el.style.left = pos.left + 'px';
+      el.style.top = pos.top + 'px';
+      el.style.animationDelay = (idx * 0.4) + 's';
+      el.innerHTML = `
+        <div class="thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
+        <div class="label">${idea.t}</div>
+      `;
+      el.addEventListener('click', ()=>{
+        openDetail({title: idea.t, ph: idea.ph, phText: idea.phText, tags: idea.tags});
+      });
+      stage.appendChild(el);
+    });
+  }
+  function renderListView(){
+    const rows = document.getElementById('list-rows');
+    if(!HOME_IDEAS.length){
+      rows.innerHTML = `<div class="list-empty">
+        <div class="le-title">還沒有任何靈感</div>
+        <div class="le-sub">點擊左側「＋新增靈感」開始累積。</div>
+      </div>`;
+      document.getElementById('list-count').textContent = '00';
+      return;
+    }
+    rows.innerHTML = HOME_IDEAS.map((i,idx)=>`
+      <div class="list-row" data-idx="${idx}">
+        <div class="lr-thumb"><div class="ph ${i.ph}">${i.phText}</div></div>
+        <div>
+          <div class="lr-title">${i.t}</div>
+          <div class="lr-desc">${i.d}</div>
+          <div class="lr-meta">${i.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+        </div>
+        <div>
+          <div class="lr-time">${i.time}</div>
+          <div class="lr-region">${i.region}</div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('list-count').textContent = String(HOME_IDEAS.length).padStart(2,'0');
+    rows.querySelectorAll('.list-row').forEach(row=>{
+      row.addEventListener('click', ()=>{
+        const i = HOME_IDEAS[parseInt(row.dataset.idx,10)];
+        openDetail({title: i.t, ph: i.ph, phText: i.phText, tags: i.tags});
+      });
+    });
+  }
+  renderListView();
+  renderFloatingCards();
+
+  const toggleBtn = document.getElementById('toggle-view');
+  const toggleBtnEl = document.getElementById('toggle-view-btn');
+  const toggleLabel = document.getElementById('toggle-view-label');
+  const ICON_LIST = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>';
+  const ICON_BRAIN = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5 3 3 0 0 0 2 5v1a3 3 0 0 0 6 0V4a3 3 0 0 0-3 0zM15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5 3 3 0 0 1-2 5v1a3 3 0 0 1-6 0"/></svg>';
+  toggleBtn.addEventListener('click', ()=>{
+    const isList = document.body.classList.toggle('list-mode');
+    toggleBtnEl.innerHTML = isList ? ICON_BRAIN : ICON_LIST;
+    toggleLabel.textContent = isList ? '大腦檢視' : '清單檢視';
+    toggleBtnEl.style.background = isList ? 'var(--violet-soft)' : '';
+    toggleBtnEl.style.color = isList ? 'var(--violet-deep)' : '';
+    window.scrollTo({top:0});
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape' && modal.classList.contains('show')) modal.classList.remove('show');
+  });
+
+  // ========= 腦區資料 =========
+  const REGIONS = {
+    prefrontal: {
+      title: '前額葉皮質', en: 'Prefrontal Cortex',
+      desc: '負責規劃、決策、目標設定、時間管理與自我控制。',
+      load: 72, state: '偏高', note: '近期有較多規劃與決策任務',
+      hotspot: { cx: 350, cy: 160, rx: 180, ry: 90 },
+      balance: '你的前額葉正在高負荷運作，建議安排恢復型活動。',
+      tags: ['散步','冥想','創作','運動'],
+      ideas: [
+        { t:'安排日本行程', d:'研究景點、交通、住宿、路線規劃', tags:['規劃','決策','多步驟'], time:'2 天前新增', ph:'ph-1', phText:'JAPAN<br/>富士山' },
+        { t:'AI 行程規劃網頁', d:'做一個能自動排程的旅遊網頁', tags:['產品','規劃','副業'], time:'3 天前新增', ph:'ph-4', phText:'UI<br/>schedule app' },
+        { t:'CRM 系統規劃', d:'研究美業 CRM 的功能設計方向', tags:['規劃','決策','產品'], time:'5 天前新增', ph:'ph-2', phText:'TABLE<br/>CRM grid' },
+      ]
+    },
+    hippocampus: {
+      title: '海馬迴', en: 'Hippocampus',
+      desc: '負責記憶形成、空間導航與經驗整合。',
+      load: 48, state: '穩定', note: '記憶整理進行中，狀態平衡',
+      hotspot: { cx: 350, cy: 360, rx: 140, ry: 70 },
+      balance: '海馬迴運作穩定，可以嘗試把回憶具象化保存。',
+      tags: ['寫作','整理','回顧','分享'],
+      ideas: [
+        { t:'30 歲生日的意義', d:'寫一封給未來自己的信，記錄此刻的心境', tags:['回憶','寫作','里程碑'], time:'1 週前新增', ph:'ph-7', phText:'30 / BIRTHDAY' },
+        { t:'童年遊戲場地圖', d:'憑記憶畫出小時候常去的所有地方', tags:['空間','回憶','繪製'], time:'2 週前新增', ph:'ph-5', phText:'MAP<br/>childhood' },
+        { t:'學習抹茶', d:'從一杯抹茶開始，認識日本茶道文化', tags:['學習','文化','體驗'], time:'10 天前新增', ph:'ph-6', phText:'MATCHA<br/>抹茶道' },
+      ]
+    },
+    parietal: {
+      title: '頂葉', en: 'Parietal Lobe',
+      desc: '負責空間感知、身體位置整合與注意力分配。',
+      load: 58, state: '中等', note: '空間思考活躍，整體平衡',
+      hotspot: { cx: 350, cy: 280, rx: 160, ry: 80 },
+      balance: '空間感知活躍，適合動手做具體的空間實驗。',
+      tags: ['整理','繪圖','量測','改造'],
+      ideas: [
+        { t:'規劃房間動線', d:'重新配置家具讓每天動線更順暢', tags:['空間','整理','生活'], time:'4 天前新增', ph:'ph-3', phText:'ROOM<br/>layout v2' },
+        { t:'IKEA 房間規劃', d:'把選好的家具用 3D 工具排進來看看', tags:['空間','家具','視覺化'], time:'6 天前新增', ph:'ph-8', phText:'IKEA<br/>3D plan' },
+        { t:'打造植物角落', d:'找到家中最適合植物生長的位置', tags:['空間','植物','光線'], time:'8 天前新增', ph:'ph-5', phText:'PLANT<br/>green spot' },
+      ]
+    },
+    dmn: {
+      title: '預設模式網路', en: 'Default Mode Network',
+      desc: '負責放空、自我反思、想像與創意聯想。',
+      load: 35, state: '低活躍', note: '建議保留更多放空時間',
+      hotspot: { cx: 350, cy: 320, rx: 200, ry: 130 },
+      balance: '預設模式偏低，建議減少資訊輸入，多留白給自己。',
+      tags: ['散步','發呆','洗澡','冥想'],
+      ideas: [
+        { t:'寫一本短小說', d:'把腦中那個一直閃過的場景寫下來', tags:['創作','故事','想像'], time:'昨天新增', ph:'ph-2', phText:'STORY<br/>fiction' },
+        { t:'畫一幅夢境', d:'用油彩重現上週那個鮮明的夢', tags:['創作','繪畫','潛意識'], time:'3 天前新增', ph:'ph-6', phText:'DREAM<br/>oil canvas' },
+        { t:'做副業網頁產品', d:'醞釀很久的點子，先寫下感覺再說', tags:['想像','產品','副業'], time:'1 週前新增', ph:'ph-2', phText:'CODE<br/>side·project' },
+      ]
+    },
+    reward: {
+      title: '獎勵系統', en: 'Reward System',
+      desc: '負責動機、成就感、愉悅體驗與正向回饋。',
+      load: 64, state: '活躍', note: '近期有不少讓你期待的小事',
+      hotspot: { cx: 350, cy: 400, rx: 130, ry: 80 },
+      balance: '獎勵系統運作良好，記得慶祝每一次完成。',
+      tags: ['獎勵','慶祝','分享','旅行'],
+      ideas: [
+        { t:'完成日本行程後犒賞自己', d:'回國後安排一次無事可做的週末', tags:['獎勵','休息','旅行'], time:'2 天前新增', ph:'ph-1', phText:'REWARD<br/>後犒賞' },
+        { t:'LINE OA 點數中心設計', d:'設計一套讓使用者愉悅累積的點數系統', tags:['獎勵','產品','UX'], time:'3 天前新增', ph:'ph-4', phText:'POINTS<br/>OA·UX' },
+        { t:'每月一場小派對', d:'和朋友一起為小成就慶祝', tags:['慶祝','社交','分享'], time:'5 天前新增', ph:'ph-7', phText:'PARTY<br/>celebrate' },
+      ]
+    },
+  };
+
+  function renderRegion(key){
+    const r = REGIONS[key];
+    if(!r) return;
+    document.getElementById('region-title').textContent = r.title;
+    document.getElementById('region-en').textContent = r.en;
+    document.getElementById('region-desc').textContent = r.desc;
+    document.getElementById('load-state').textContent = r.state;
+    document.getElementById('load-note').textContent = r.note;
+    document.getElementById('region-tag-en').textContent = r.en.toUpperCase();
+    document.getElementById('balance-text').textContent = r.balance;
+
+    // animate width
+    const fill = document.getElementById('load-fill');
+    fill.style.width = '0%';
+    setTimeout(()=>{ fill.style.width = r.load + '%'; }, 50);
+
+    // hotspot
+    const hs = document.getElementById('hotspotEl');
+    hs.setAttribute('cx', r.hotspot.cx);
+    hs.setAttribute('cy', r.hotspot.cy);
+    hs.setAttribute('rx', r.hotspot.rx);
+    hs.setAttribute('ry', r.hotspot.ry);
+
+    // ideas
+    const list = document.getElementById('idea-list');
+    list.innerHTML = r.ideas.map((i,idx)=>`
+      <div class="idea-card" data-idea-idx="${idx}">
+        <div class="idea-thumb"><div class="ph ${i.ph}">${i.phText}</div></div>
+        <div class="idea-body">
+          <div class="idea-title">${i.t}</div>
+          <div class="idea-desc">${i.d}</div>
+          <div class="idea-meta">
+            ${i.tags.map(t=>`<span class="chip">${t}</span>`).join('')}
+            <span class="idea-time">${i.time}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('idea-count').textContent =
+      String(r.ideas.length).padStart(2,'0') + ' ideas';
+
+    // 綁定靈感卡片點擊
+    list.querySelectorAll('.idea-card').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        const i = r.ideas[parseInt(card.dataset.ideaIdx,10)];
+        openDetail({title: i.t, ph: i.ph, phText: i.phText, tags: i.tags});
+      });
+    });
+
+    // balance pills
+    document.getElementById('balance-actions').innerHTML =
+      r.tags.map(t=>`<button class="pill">${t}</button>`).join('');
+
+    // active states
+    document.querySelectorAll('#region-tabs .nav-tab').forEach(b=>{
+      b.classList.toggle('active', b.dataset.region===key);
+    });
+    document.querySelectorAll('#region-sidenav .region-icon').forEach(b=>{
+      b.classList.toggle('active', b.dataset.region===key);
+    });
+  }
+
+  document.querySelectorAll('#region-tabs .nav-tab').forEach(b=>{
+    b.addEventListener('click', ()=> renderRegion(b.dataset.region));
+  });
+  document.querySelectorAll('#region-sidenav .region-icon').forEach(b=>{
+    b.addEventListener('click', ()=> renderRegion(b.dataset.region));
+  });
+
+  renderRegion('prefrontal');
+</script>
+</body>
+</html>

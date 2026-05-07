@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:24px; background: var(--ms-bg-canvas); }
+  .row { display:flex; gap:14px; align-items:stretch; }
+  .swatch { flex:1; border-radius: var(--ms-radius-md); padding:12px 14px; min-height:96px; display:flex; flex-direction:column; justify-content:space-between; box-shadow: var(--ms-shadow-card); }
+  .name { font-size:13px; font-weight:500; }
+  .meta { font-family:'Inter'; font-size:11px; opacity:0.7; }
+  .label { font-size:14px; font-weight:500; color: var(--ms-fg-1); margin-bottom:6px;}
+</style></head>
+<body>
+<div class="label">負荷狀態 · Load status</div>
+<div class="row">
+  <div class="swatch" style="background:#A8D0B5"><div class="name">偏低 · Low</div><div class="meta">#A8D0B5</div></div>
+  <div class="swatch" style="background:#E5D9B5"><div class="name">適中 · Balanced</div><div class="meta">#E5D9B5</div></div>
+  <div class="swatch" style="background:#C9B8FF"><div class="name">偏高 · High</div><div class="meta">#C9B8FF</div></div>
+  <div class="swatch" style="background:#6FA8E5; color:#fff"><div class="name">active dot</div><div class="meta">#6FA8E5</div></div>
+</div>
+</body></html>

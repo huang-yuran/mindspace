@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:24px; background: var(--ms-bg-canvas); display:flex; gap:16px; align-items:flex-start; }
+  .rail { display:flex; flex-direction:column; gap:14px; }
+  .item { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; }
+  .puck { width:64px; height:64px; border-radius:18px; background: var(--ms-surface-1); border:1px solid var(--ms-surface-hairline); display:grid; place-items:center; box-shadow: var(--ms-shadow-card); }
+  .puck svg { stroke: var(--ms-fg-1); stroke-width:1.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .item .lbl { font-size:11px; color: var(--ms-fg-2); }
+  .item.active .puck { background: var(--ms-accent-gradient); box-shadow: var(--ms-glow-accent); border:none; }
+  .item.active .puck svg { stroke: rgba(60,50,40,0.85); }
+  .item.active .lbl { color: var(--ms-fg-1); font-weight:500; }
+  /* describe — text col */
+  .info { font-size:13px; color: var(--ms-fg-2); padding:18px; border-left:1px solid rgba(0,0,0,0.06); margin-left:8px; max-width:380px; line-height:1.7; }
+</style></head>
+<body>
+<div class="rail">
+  <div class="item active"><div class="puck"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div><div class="lbl">前額葉皮質</div></div>
+  <div class="item"><div class="puck"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 12c0-3 2-5 5-5 2 0 3 1 4 2 1-1 2-2 4-2 3 0 5 2 5 5 0 4-5 8-9 10-4-2-9-6-9-10z"/></svg></div><div class="lbl">海馬迴</div></div>
+  <div class="item"><div class="puck"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 14c0-5 3-9 7-9s7 4 7 9c0 2-1 4-3 5H8c-2-1-3-3-3-5z"/><path d="M12 5v14"/></svg></div><div class="lbl">頂葉</div></div>
+  <div class="item"><div class="puck"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="6" cy="8" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="12" cy="16" r="2"/><path d="M7 9l4 6M17 9l-4 6"/></svg></div><div class="lbl">預設模式網路</div></div>
+  <div class="item"><div class="puck"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 4l2.5 5 5.5.8-4 4 1 5.5-5-2.6-5 2.6 1-5.5-4-4 5.5-.8z"/></svg></div><div class="lbl">獎勵系統</div></div>
+</div>
+<div class="info">
+  <strong style="color:var(--ms-fg-1)">五個腦區</strong> · five regions<br>
+  Rail of brain regions, vertical, fixed-left. Active region uses iridescent gradient + soft glow. Inactive: glass puck, hairline 1px.<br>
+  Tap to switch context.
+</div>
+</body></html>
