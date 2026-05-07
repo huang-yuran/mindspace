@@ -895,7 +895,7 @@ body.list-mode .list-view { display: block; }
       </div>
       <div class="sb-label">靈感<br/>地圖</div>
     </div>
-    <div class="sb-item">
+    <div class="sb-item" onclick="clearBrain()">
       <div class="sb-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
       </div>
@@ -1212,7 +1212,20 @@ function goToHome() {
 // ════════════════════════════════════════════════
 // Ideas data & state
 // ════════════════════════════════════════════════
-let IDEAS = [];
+let IDEAS = [
+  { id:1, t:'安排日本行程', d:'研究景點、交通、住宿、路線規劃', tags:['規劃','決策','多步驟'], time:'2 天前', region:'prefrontal', ph:'ph-1', phText:'JAPAN<br/>富士山' },
+  { id:2, t:'AI 行程規劃網頁', d:'做一個能自動排程的旅遊網頁', tags:['產品','規劃','副業'], time:'3 天前', region:'prefrontal', ph:'ph-4', phText:'UI<br/>PLAN' },
+  { id:3, t:'CRM 系統規劃', d:'研究美業 CRM 的功能設計方向', tags:['規劃','決策','產品'], time:'5 天前', region:'prefrontal', ph:'ph-2', phText:'CRM<br/>GRID' },
+  { id:4, t:'30 歲生日的意義', d:'寫一封給未來自己的信', tags:['回憶','寫作','里程碑'], time:'1 週前', region:'hippocampus', ph:'ph-7', phText:'30<br/>BIRTH' },
+  { id:5, t:'童年遊戲場地圖', d:'憑記憶畫出小時候常去的所有地方', tags:['空間','回憶','繪製'], time:'2 週前', region:'hippocampus', ph:'ph-5', phText:'MAP<br/>CHILD' },
+  { id:6, t:'學習抹茶', d:'從一杯抹茶開始，認識日本茶道文化', tags:['學習','文化','體驗'], time:'10 天前', region:'hippocampus', ph:'ph-6', phText:'抹茶<br/>MATCHA' },
+  { id:7, t:'規劃房間動線', d:'重新配置家具讓每天動線更順暢', tags:['空間','整理','生活'], time:'4 天前', region:'parietal', ph:'ph-3', phText:'ROOM<br/>PLAN' },
+  { id:8, t:'IKEA 房間規劃', d:'把選好的家具用 3D 工具排進來看看', tags:['空間','家具','視覺化'], time:'6 天前', region:'parietal', ph:'ph-8', phText:'IKEA<br/>3D' },
+  { id:9, t:'寫一本短小說', d:'把腦中那個一直閃過的場景寫下來', tags:['創作','故事','想像'], time:'昨天', region:'dmn', ph:'ph-2', phText:'STORY<br/>小說' },
+  { id:10, t:'畫一幅夢境', d:'用油彩重現上週那個鮮明的夢', tags:['創作','繪畫','潛意識'], time:'3 天前', region:'dmn', ph:'ph-6', phText:'DREAM<br/>OIL' },
+  { id:11, t:'完成行程後犒賞自己', d:'回國後安排一次無事可做的週末', tags:['獎勵','休息','旅行'], time:'2 天前', region:'reward', ph:'ph-1', phText:'後犒賞<br/>REST' },
+  { id:12, t:'LINE OA 點數中心設計', d:'設計讓使用者愉悅累積的點數系統', tags:['獎勵','產品','UX'], time:'3 天前', region:'reward', ph:'ph-4', phText:'POINTS<br/>OA' },
+];
 const PH = ['ph-1','ph-2','ph-3','ph-4','ph-5','ph-6','ph-7','ph-8'];
 
 const FLOAT_POS = [
@@ -1243,6 +1256,14 @@ function addIdea(title, tags) {
     region: guessRegion(title, tags),
     ph, phText,
   });
+  renderFloatingCards();
+  renderListView();
+}
+
+function clearBrain() {
+  if (!IDEAS.length) return;
+  if (!confirm('確定要清空所有靈感嗎？')) return;
+  IDEAS.length = 0;
   renderFloatingCards();
   renderListView();
 }
@@ -1408,11 +1429,6 @@ const REGIONS = {
     hotspot: { cx: 340, cy: 158, rx: 176, ry: 88 },
     balance: '你的前額葉正在高負荷運作，建議安排恢復型活動。',
     pills: ['散步','冥想','創作','運動'],
-    ideas: [
-      { t:'安排日本行程', d:'研究景點、交通、住宿、路線規劃', tags:['規劃','決策','多步驟'], time:'2 天前', ph:'ph-1', phText:'JAPAN<br/>富士山' },
-      { t:'AI 行程規劃網頁', d:'做一個能自動排程的旅遊網頁', tags:['產品','規劃','副業'], time:'3 天前', ph:'ph-4', phText:'UI<br/>PLAN' },
-      { t:'CRM 系統規劃', d:'研究美業 CRM 的功能設計方向', tags:['規劃','決策','產品'], time:'5 天前', ph:'ph-2', phText:'CRM<br/>GRID' },
-    ],
   },
   hippocampus: {
     title: '海馬迴', en: 'Hippocampus',
@@ -1421,11 +1437,6 @@ const REGIONS = {
     hotspot: { cx: 340, cy: 356, rx: 140, ry: 72 },
     balance: '海馬迴運作穩定，可以嘗試把回憶具象化保存。',
     pills: ['寫作','整理','回顧','分享'],
-    ideas: [
-      { t:'30 歲生日的意義', d:'寫一封給未來自己的信', tags:['回憶','寫作','里程碑'], time:'1 週前', ph:'ph-7', phText:'30<br/>BIRTH' },
-      { t:'童年遊戲場地圖', d:'憑記憶畫出小時候常去的所有地方', tags:['空間','回憶','繪製'], time:'2 週前', ph:'ph-5', phText:'MAP<br/>CHILD' },
-      { t:'學習抹茶', d:'從一杯抹茶開始，認識日本茶道文化', tags:['學習','文化','體驗'], time:'10 天前', ph:'ph-6', phText:'抹茶<br/>MATCHA' },
-    ],
   },
   parietal: {
     title: '頂葉', en: 'Parietal Lobe',
@@ -1434,11 +1445,6 @@ const REGIONS = {
     hotspot: { cx: 340, cy: 278, rx: 158, ry: 80 },
     balance: '空間感知活躍，適合動手做具體的空間實驗。',
     pills: ['整理','繪圖','量測','改造'],
-    ideas: [
-      { t:'規劃房間動線', d:'重新配置家具讓每天動線更順暢', tags:['空間','整理','生活'], time:'4 天前', ph:'ph-3', phText:'ROOM<br/>PLAN' },
-      { t:'IKEA 房間規劃', d:'把選好的家具用 3D 工具排進來看看', tags:['空間','家具','視覺化'], time:'6 天前', ph:'ph-8', phText:'IKEA<br/>3D' },
-      { t:'打造植物角落', d:'找到家中最適合植物生長的位置', tags:['空間','植物','光線'], time:'8 天前', ph:'ph-5', phText:'植物<br/>GREEN' },
-    ],
   },
   dmn: {
     title: '預設模式網路', en: 'Default Mode Network',
@@ -1447,11 +1453,6 @@ const REGIONS = {
     hotspot: { cx: 340, cy: 318, rx: 198, ry: 130 },
     balance: '預設模式偏低，建議減少資訊輸入，多留白給自己。',
     pills: ['散步','發呆','洗澡','冥想'],
-    ideas: [
-      { t:'寫一本短小說', d:'把腦中那個一直閃過的場景寫下來', tags:['創作','故事','想像'], time:'昨天', ph:'ph-2', phText:'STORY<br/>小說' },
-      { t:'畫一幅夢境', d:'用油彩重現上週那個鮮明的夢', tags:['創作','繪畫','潛意識'], time:'3 天前', ph:'ph-6', phText:'DREAM<br/>OIL' },
-      { t:'做副業網頁產品', d:'醞釀很久的點子，先寫下感覺再說', tags:['想像','產品','副業'], time:'1 週前', ph:'ph-2', phText:'CODE<br/>SIDE' },
-    ],
   },
   reward: {
     title: '獎勵系統', en: 'Reward System',
@@ -1460,11 +1461,6 @@ const REGIONS = {
     hotspot: { cx: 340, cy: 396, rx: 132, ry: 78 },
     balance: '獎勵系統運作良好，記得慶祝每一次完成。',
     pills: ['獎勵','慶祝','分享','旅行'],
-    ideas: [
-      { t:'完成行程後犒賞自己', d:'回國後安排一次無事可做的週末', tags:['獎勵','休息','旅行'], time:'2 天前', ph:'ph-1', phText:'後犒賞<br/>REST' },
-      { t:'LINE OA 點數中心設計', d:'設計讓使用者愉悅累積的點數系統', tags:['獎勵','產品','UX'], time:'3 天前', ph:'ph-4', phText:'POINTS<br/>OA' },
-      { t:'每月一場小派對', d:'和朋友一起為小成就慶祝', tags:['慶祝','社交','分享'], time:'5 天前', ph:'ph-7', phText:'PARTY<br/>慶祝' },
-    ],
   },
 };
 
@@ -1498,30 +1494,37 @@ function renderRegion(key) {
   hs.setAttribute('rx', r.hotspot.rx);
   hs.setAttribute('ry', r.hotspot.ry);
 
-  // Render ideas
+  // Render ideas — filtered from shared IDEAS array
+  const regionIdeas = IDEAS.filter(i => i.region === key);
   const list = document.getElementById('idea-list');
-  list.innerHTML = r.ideas.map((idea, idx) => `
-    <div class="idea-card" data-idx="${idx}">
-      <div class="idea-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
-      <div class="idea-body">
-        <div class="idea-title">${idea.t}</div>
-        <div class="idea-desc">${idea.d}</div>
-        <div class="idea-meta">
-          ${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}
-          <span class="idea-time">${idea.time}</span>
+
+  if (!regionIdeas.length) {
+    list.innerHTML = `<div class="list-empty" style="padding:40px 0;">
+      <div class="le-title">這個腦區還沒有靈感</div>
+      <div class="le-sub">回主頁新增靈感，會自動分配到對應腦區。</div>
+    </div>`;
+    document.getElementById('idea-count').textContent = '00';
+  } else {
+    list.innerHTML = regionIdeas.map((idea, idx) => `
+      <div class="idea-card" data-idx="${idx}">
+        <div class="idea-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
+        <div class="idea-body">
+          <div class="idea-title">${idea.t}</div>
+          <div class="idea-desc">${idea.d}</div>
+          <div class="idea-meta">
+            ${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}
+            <span class="idea-time">${idea.time}</span>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
 
-  document.getElementById('idea-count').textContent = String(r.ideas.length).padStart(2, '0');
+    document.getElementById('idea-count').textContent = String(regionIdeas.length).padStart(2, '0');
 
-  list.querySelectorAll('.idea-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const idea = r.ideas[parseInt(card.dataset.idx, 10)];
-      openDetail(idea);
+    list.querySelectorAll('.idea-card').forEach(card => {
+      card.addEventListener('click', () => openDetail(regionIdeas[parseInt(card.dataset.idx, 10)]));
     });
-  });
+  }
 
   // Balance pills
   document.getElementById('balance-actions').innerHTML =
