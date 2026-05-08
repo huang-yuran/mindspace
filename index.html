@@ -2,421 +2,100 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8" />
-<title>Mindspace · 你的靈感宇宙</title>
+<title>BrainDrop · 你的靈感宇宙</title>
 <meta name="viewport" content="width=1440" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-/* ── Design Tokens ─────────────────────────────────────────────── */
 :root {
-  /* Background */
-  --bg-1: #F4F2EF;
-  --bg-2: #ECEAE6;
-
-  /* Surfaces (glass) */
-  --surface-1: rgba(255,255,255,0.82);
-  --surface-2: rgba(255,255,255,0.60);
-  --surface-3: rgba(255,255,255,0.40);
-  --hairline: rgba(255,255,255,0.65);
-
-  /* Foreground / Text */
-  --fg-1: #2A2723;
-  --fg-2: #7C7872;
-  --fg-3: #B5B0A8;
-  --fg-on-accent: #ffffff;
-
-  /* Accent — iridescent gradient */
-  --accent-a: #BFD4FF;
-  --accent-b: #C9B8FF;
-  --accent-c: #FAC8E2;
+  --bg-1: #F4F2EF; --bg-2: #ECEAE6;
+  --surface-1: rgba(255,255,255,0.82); --surface-2: rgba(255,255,255,0.60);
+  --surface-3: rgba(255,255,255,0.40); --hairline: rgba(255,255,255,0.65);
+  --fg-1: #2A2723; --fg-2: #7C7872; --fg-3: #B5B0A8; --fg-on-accent: #ffffff;
+  --accent-a: #BFD4FF; --accent-b: #C9B8FF; --accent-c: #FAC8E2;
   --accent: linear-gradient(135deg, var(--accent-a) 0%, var(--accent-b) 50%, var(--accent-c) 100%);
-  --accent-soft: linear-gradient(135deg,
-    rgba(191,212,255,0.35) 0%,
-    rgba(201,184,255,0.35) 50%,
-    rgba(250,200,226,0.35) 100%);
+  --accent-soft: linear-gradient(135deg,rgba(191,212,255,0.35) 0%,rgba(201,184,255,0.35) 50%,rgba(250,200,226,0.35) 100%);
   --accent-solid: #C9B8FF;
-
-  /* Shadows — warm-toned */
-  --shadow-sm:
-    inset 0 1px 0 rgba(255,255,255,0.70),
-    0 2px 8px -2px rgba(60,50,40,0.10);
-  --shadow-md:
-    inset 0 1px 0 rgba(255,255,255,0.65),
-    0 8px 32px -8px rgba(60,50,40,0.14);
-  --shadow-lg:
-    inset 0 1px 0 rgba(255,255,255,0.80),
-    0 20px 60px -16px rgba(60,50,40,0.22);
-  --shadow-float:
-    inset 0 1px 0 rgba(255,255,255,0.90),
-    0 20px 60px -20px rgba(60,50,40,0.28);
-  --glow-accent:
-    0 0 28px rgba(201,184,255,0.40),
-    0 0 56px rgba(191,212,255,0.20);
-
-  /* Blur */
-  --blur-glass: blur(24px) saturate(1.1);
-  --blur-modal: blur(10px);
-
-  /* Motion */
+  --shadow-sm: inset 0 1px 0 rgba(255,255,255,0.70),0 2px 8px -2px rgba(60,50,40,0.10);
+  --shadow-md: inset 0 1px 0 rgba(255,255,255,0.65),0 8px 32px -8px rgba(60,50,40,0.14);
+  --shadow-lg: inset 0 1px 0 rgba(255,255,255,0.80),0 20px 60px -16px rgba(60,50,40,0.22);
+  --shadow-float: inset 0 1px 0 rgba(255,255,255,0.90),0 20px 60px -20px rgba(60,50,40,0.28);
+  --glow-accent: 0 0 28px rgba(201,184,255,0.40),0 0 56px rgba(191,212,255,0.20);
+  --blur-glass: blur(24px) saturate(1.1); --blur-modal: blur(10px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 240ms;
-  --dur-base: 420ms;
-  --dur-slow: 640ms;
-
-  /* Radii */
-  --r-sm:   8px;
-  --r-md:   16px;
-  --r-lg:   20px;
-  --r-xl:   28px;
-  --r-pill: 999px;
-
-  /* Layout */
-  --nav-h: 72px;
-  --sidebar-w: 96px;
+  --dur-fast: 240ms; --dur-base: 420ms; --dur-slow: 640ms;
+  --r-sm: 8px; --r-md: 16px; --r-lg: 20px; --r-xl: 28px; --r-pill: 999px;
+  --nav-h: 72px; --sidebar-w: 96px;
 }
-
-/* ── Reset ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   font-family: 'Noto Sans TC', -apple-system, system-ui, sans-serif;
-  font-size: 16px;
-  color: var(--fg-1);
+  font-size: 16px; color: var(--fg-1);
   background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
   background-attachment: fixed;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
 }
-body {
-  width: 1440px;
-  margin: 0 auto;
-  position: relative;
-}
+body { width: 1440px; margin: 0 auto; position: relative; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-/* ── Ambient background glows ──────────────────────────────────── */
-.ambient {
-  position: fixed;
-  inset: 0;
-  width: 1440px;
-  margin: 0 auto;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-.ambient::before {
-  content: "";
-  position: absolute;
-  width: 720px; height: 720px;
-  top: -200px; right: -120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,184,255,0.45) 0%, transparent 70%);
-  filter: blur(80px);
-}
-.ambient::after {
-  content: "";
-  position: absolute;
-  width: 480px; height: 480px;
-  bottom: -80px; left: 8%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(191,212,255,0.32) 0%, transparent 70%);
-  filter: blur(80px);
-  opacity: 0.8;
-}
+.ambient { position: fixed; inset: 0; width: 1440px; margin: 0 auto; pointer-events: none; z-index: 0; overflow: hidden; }
+.ambient::before { content: ""; position: absolute; width: 720px; height: 720px; top: -200px; right: -120px; border-radius: 50%; background: radial-gradient(circle, rgba(201,184,255,0.45) 0%, transparent 70%); filter: blur(80px); }
+.ambient::after { content: ""; position: absolute; width: 480px; height: 480px; bottom: -80px; left: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(191,212,255,0.32) 0%, transparent 70%); filter: blur(80px); opacity: 0.8; }
 
-/* ── Screen toggling ────────────────────────────────────────────── */
 .page { display: none; position: relative; z-index: 1; min-height: calc(100vh - var(--nav-h)); }
 .page.active { display: block; }
 
-/* ── Top navigation ─────────────────────────────────────────────── */
-.topnav {
-  position: relative;
-  z-index: 20;
-  height: var(--nav-h);
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
+.topnav { position: relative; z-index: 20; height: var(--nav-h); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 16px; }
 .brand-mark { display: flex; align-items: baseline; gap: 10px; }
 .brand-name { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--fg-1); }
-.brand-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px rgba(201,184,255,0.7);
-  display: inline-block;
-  transform: translateY(-1px);
-}
-.brand-sub {
-  font-size: 13px; color: var(--fg-2);
-  border-left: 1px solid rgba(60,50,40,0.12);
-  padding-left: 16px;
-  letter-spacing: 0.02em;
-}
-
-.nav-back {
-  display: flex; align-items: center; gap: 14px;
-  font-size: 22px; font-weight: 700; color: var(--fg-1);
-  cursor: pointer;
-  user-select: none;
-}
-.nav-back-arrow {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: var(--surface-1);
-  box-shadow: var(--shadow-sm);
-  display: grid; place-items: center;
-  font-size: 16px; color: var(--fg-2);
-  border: 1px solid var(--hairline);
-  transition: all var(--dur-fast) var(--ease);
-}
-.nav-back:hover .nav-back-arrow {
-  background: white;
-  color: var(--fg-1);
-  box-shadow: var(--shadow-md);
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 3px;
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border: 1px solid var(--hairline);
-  padding: 4px;
-  border-radius: var(--r-pill);
-  box-shadow: var(--shadow-sm);
-}
-.nav-tab {
-  padding: 7px 18px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--fg-2);
-  border-radius: var(--r-pill);
-  transition: all var(--dur-fast) var(--ease);
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-}
+.brand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(201,184,255,0.7); display: inline-block; transform: translateY(-1px); }
+.brand-sub { font-size: 13px; color: var(--fg-2); border-left: 1px solid rgba(60,50,40,0.12); padding-left: 16px; letter-spacing: 0.02em; }
+.nav-back { display: flex; align-items: center; gap: 14px; font-size: 22px; font-weight: 700; color: var(--fg-1); cursor: pointer; user-select: none; }
+.nav-back-arrow { width: 34px; height: 34px; border-radius: 50%; background: var(--surface-1); box-shadow: var(--shadow-sm); display: grid; place-items: center; font-size: 16px; color: var(--fg-2); border: 1px solid var(--hairline); transition: all var(--dur-fast) var(--ease); }
+.nav-back:hover .nav-back-arrow { background: white; color: var(--fg-1); box-shadow: var(--shadow-md); }
+.nav-tabs { display: flex; gap: 3px; background: var(--surface-1); backdrop-filter: var(--blur-glass); border: 1px solid var(--hairline); padding: 4px; border-radius: var(--r-pill); box-shadow: var(--shadow-sm); }
+.nav-tab { padding: 7px 18px; font-size: 13px; font-weight: 500; color: var(--fg-2); border-radius: var(--r-pill); transition: all var(--dur-fast) var(--ease); white-space: nowrap; letter-spacing: 0.01em; }
 .nav-tab:hover { color: var(--fg-1); }
-.nav-tab.active {
-  background: var(--accent);
-  color: var(--fg-1);
-  font-weight: 600;
-  box-shadow: 0 3px 12px rgba(201,184,255,0.45);
-}
-
+.nav-tab.active { background: var(--accent); color: var(--fg-1); font-weight: 600; box-shadow: 0 3px 12px rgba(201,184,255,0.45); }
 .nav-tools { display: flex; align-items: center; gap: 10px; }
-.icon-btn {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border: 1px solid var(--hairline);
-  display: grid; place-items: center;
-  color: var(--fg-2);
-  transition: all var(--dur-fast) var(--ease);
-}
+.icon-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--surface-1); backdrop-filter: var(--blur-glass); border: 1px solid var(--hairline); display: grid; place-items: center; color: var(--fg-2); transition: all var(--dur-fast) var(--ease); }
 .icon-btn:hover { background: white; color: var(--fg-1); box-shadow: var(--shadow-sm); }
-.avatar {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 35%, #fff 0%, #c8b8d8 40%, #7a6a88 80%);
-  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.08);
-  display: grid; place-items: center;
-  font-size: 12px; font-weight: 600; color: white;
-}
+.avatar { width: 38px; height: 38px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #fff 0%, #c8b8d8 40%, #7a6a88 80%); box-shadow: inset 0 -3px 6px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.08); display: grid; place-items: center; font-size: 12px; font-weight: 600; color: white; }
 
-/* ── Sidebar ────────────────────────────────────────────────────── */
-.sidebar {
-  position: absolute;
-  left: 36px;
-  top: 20px;
-  width: 80px;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  align-items: center;
-}
-.sb-item {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  cursor: pointer; user-select: none;
-}
-.sb-btn {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  box-shadow: var(--shadow-sm);
-  display: grid; place-items: center;
-  color: var(--fg-2);
-  transition: all var(--dur-fast) var(--ease);
-  border: 1px solid var(--hairline);
-}
+.sidebar { position: absolute; left: 36px; top: 20px; width: 80px; z-index: 5; display: flex; flex-direction: column; gap: 22px; align-items: center; }
+.sb-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.sb-btn { width: 52px; height: 52px; border-radius: 50%; background: var(--surface-1); backdrop-filter: var(--blur-glass); box-shadow: var(--shadow-sm); display: grid; place-items: center; color: var(--fg-2); transition: all var(--dur-fast) var(--ease); border: 1px solid var(--hairline); }
 .sb-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); color: var(--fg-1); }
-.sb-btn.primary {
-  width: 60px; height: 60px;
-  background: var(--accent);
-  color: var(--fg-1);
-  box-shadow: var(--glow-accent);
-  border: none;
-  font-size: 26px; font-weight: 300;
-}
+.sb-btn.primary { width: 60px; height: 60px; background: var(--accent); color: var(--fg-1); box-shadow: var(--glow-accent); border: none; font-size: 26px; font-weight: 300; }
 .sb-btn.primary:hover { transform: translateY(-2px) scale(1.04); }
-.sb-btn.active-view {
-  background: rgba(201,184,255,0.18);
-  color: var(--accent-solid);
-  border-color: rgba(201,184,255,0.40);
-}
+.sb-btn.active-view { background: rgba(201,184,255,0.18); color: var(--accent-solid); border-color: rgba(201,184,255,0.40); }
 .sb-label { font-size: 10px; color: var(--fg-3); font-weight: 500; letter-spacing: 0.04em; text-align: center; line-height: 1.3; }
 
-/* ── Home: Main stage ───────────────────────────────────────────── */
-.home-stage {
-  position: relative;
-  height: calc(100vh - var(--nav-h));
-  min-height: 860px;
-  width: 100%;
-}
+.home-stage { position: relative; height: calc(100vh - var(--nav-h)); min-height: 860px; width: 100%; }
+.home-headline { position: absolute; top: 64px; left: 0; right: 0; text-align: center; z-index: 6; pointer-events: none; }
+.home-headline h1 { font-size: 60px; font-weight: 900; letter-spacing: -0.03em; color: var(--fg-1); line-height: 1.1; margin-bottom: 14px; }
+.home-headline h1 .accent-text { background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.home-headline p { font-size: 15px; color: var(--fg-2); letter-spacing: 0.02em; }
 
-.home-headline {
-  position: absolute;
-  top: 64px;
-  left: 0; right: 0;
-  text-align: center;
-  z-index: 6;
-  pointer-events: none;
-}
-.home-headline h1 {
-  font-size: 60px;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  color: var(--fg-1);
-  line-height: 1.1;
-  margin-bottom: 14px;
-}
-.home-headline h1 .accent-text {
-  background: var(--accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.home-headline p {
-  font-size: 15px;
-  color: var(--fg-2);
-  letter-spacing: 0.02em;
-}
+.brain-stage { position: absolute; top: 50%; left: 50%; transform: translate(-46%, -44%); width: 960px; height: 700px; z-index: 2; }
+.brain-halo { position: absolute; inset: 8% 10%; border-radius: 50% / 44%; background: radial-gradient(ellipse at 38% 30%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.50) 16%, rgba(255,255,255,0) 40%), radial-gradient(ellipse at 65% 68%, rgba(220,212,240,0.50) 0%, rgba(220,212,240,0) 48%), radial-gradient(ellipse at 50% 50%, rgba(246,244,255,0.88) 0%, rgba(240,236,252,0.55) 44%, rgba(240,236,252,0.18) 68%, rgba(240,236,252,0) 88%); box-shadow: inset 0 -44px 88px rgba(190,178,220,0.18),inset 0 44px 88px rgba(255,255,255,0.38),0 32px 88px -22px rgba(150,138,180,0.18); animation: brainPulse 4.8s ease-in-out infinite; }
+.brain-halo::before { content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0.65; background-image: radial-gradient(1.5px 1.5px at 22% 28%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 40% 16%, #fff 100%, transparent 100%),radial-gradient(1.5px 1.5px at 57% 38%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 72% 26%, #fff 100%, transparent 100%),radial-gradient(2px 2px at 31% 58%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 50% 70%, #fff 100%, transparent 100%),radial-gradient(1.5px 1.5px at 67% 56%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 80% 68%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 19% 76%, #fff 100%, transparent 100%),radial-gradient(1.5px 1.5px at 84% 40%, #fff 100%, transparent 100%),radial-gradient(1px 1px at 44% 84%, #fff 100%, transparent 100%),radial-gradient(1.5px 1.5px at 16% 48%, #fff 100%, transparent 100%); animation: brainTwinkle 4.2s ease-in-out infinite; }
+.brain-halo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg,rgba(191,212,255,0.12) 0%,rgba(201,184,255,0.10) 50%,rgba(250,200,226,0.08) 100%); pointer-events: none; }
+@keyframes brainPulse { 0%, 100% { opacity: 0.92; transform: scale(1); } 50% { opacity: 1.0; transform: scale(1.014); } }
+@keyframes brainTwinkle { 0%, 100% { opacity: 0.50; } 50% { opacity: 0.90; } }
 
-/* ── Brain stage ───────────────────────────────────────────────── */
-.brain-stage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-46%, -44%);
-  width: 960px;
-  height: 700px;
-  z-index: 2;
-}
-
-.brain-halo {
-  position: absolute;
-  inset: 8% 10%;
-  border-radius: 50% / 44%;
-  background:
-    radial-gradient(ellipse at 38% 30%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.50) 16%, rgba(255,255,255,0) 40%),
-    radial-gradient(ellipse at 65% 68%, rgba(220,212,240,0.50) 0%, rgba(220,212,240,0) 48%),
-    radial-gradient(ellipse at 50% 50%, rgba(246,244,255,0.88) 0%, rgba(240,236,252,0.55) 44%, rgba(240,236,252,0.18) 68%, rgba(240,236,252,0) 88%);
-  box-shadow:
-    inset 0 -44px 88px rgba(190,178,220,0.18),
-    inset 0 44px 88px rgba(255,255,255,0.38),
-    0 32px 88px -22px rgba(150,138,180,0.18);
-  animation: brainPulse 4.8s ease-in-out infinite;
-}
-.brain-halo::before {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  opacity: 0.65;
-  background-image:
-    radial-gradient(1.5px 1.5px at 22% 28%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 40% 16%, #fff 100%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 57% 38%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 72% 26%, #fff 100%, transparent 100%),
-    radial-gradient(2px 2px at 31% 58%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 50% 70%, #fff 100%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 67% 56%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 80% 68%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 19% 76%, #fff 100%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 84% 40%, #fff 100%, transparent 100%),
-    radial-gradient(1px 1px at 44% 84%, #fff 100%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 16% 48%, #fff 100%, transparent 100%);
-  animation: brainTwinkle 4.2s ease-in-out infinite;
-}
-.brain-halo::after {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg,
-    rgba(191,212,255,0.12) 0%,
-    rgba(201,184,255,0.10) 50%,
-    rgba(250,200,226,0.08) 100%);
-  pointer-events: none;
-}
-@keyframes brainPulse {
-  0%, 100% { opacity: 0.92; transform: scale(1); }
-  50% { opacity: 1.0; transform: scale(1.014); }
-}
-@keyframes brainTwinkle {
-  0%, 100% { opacity: 0.50; }
-  50% { opacity: 0.90; }
-}
-
-/* ── Floating idea cards ────────────────────────────────────────── */
-.float-card {
-  position: absolute;
-  width: 110px;
-  cursor: pointer;
-  z-index: 4;
-  text-align: center;
-  animation: floatY 6s ease-in-out infinite;
-  transition: transform var(--dur-base) var(--ease), z-index 0s;
-}
+.float-card { position: absolute; width: 110px; cursor: pointer; z-index: 4; text-align: center; animation: floatY 6s ease-in-out infinite; transition: transform var(--dur-base) var(--ease), z-index 0s; }
 .float-card:hover { transform: scale(1.09) translateY(-5px); z-index: 7; }
-.float-card .thumb {
-  width: 110px; height: 110px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow:
-    0 10px 30px -8px rgba(60,50,40,0.20),
-    0 0 0 1px rgba(255,255,255,0.75),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-  backdrop-filter: var(--blur-glass);
-}
-.float-card .card-label {
-  margin-top: 9px;
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--fg-1);
-  background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(8px);
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  box-shadow: var(--shadow-sm);
-  white-space: nowrap;
-  max-width: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.01em;
-}
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
+.float-card .thumb { width: 110px; height: 110px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px -8px rgba(60,50,40,0.20),0 0 0 1px rgba(255,255,255,0.75),inset 0 1px 0 rgba(255,255,255,0.9); backdrop-filter: var(--blur-glass); position: relative; }
+.float-card .card-label { margin-top: 9px; display: inline-block; font-size: 11px; font-weight: 600; color: var(--fg-1); background: rgba(255,255,255,0.88); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: var(--r-pill); box-shadow: var(--shadow-sm); white-space: nowrap; max-width: 130px; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.01em; }
+.float-card .status-dot { position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.8); }
+.float-card .status-dot.frozen { background: #6090D8; }
+.float-card .status-dot.idle { background: #A0A098; }
+.float-card .status-dot.occupied { background: #D08030; }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 
-/* Placeholder thumb gradients */
 .ph { width: 100%; height: 100%; display: grid; place-items: center; font-size: 9px; color: rgba(255,255,255,0.9); font-family: 'Inter', monospace; letter-spacing: 0.06em; text-align: center; padding: 5px; line-height: 1.5; position: relative; }
 .ph::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(255,255,255,0.06) 10px 11px); }
 .ph-1 { background: linear-gradient(135deg,#e8a090,#d06070); }
@@ -428,452 +107,201 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .ph-7 { background: linear-gradient(135deg,#e8c088,#d0a070); }
 .ph-8 { background: linear-gradient(135deg,#d0c0a8,#a8907a); }
 
-/* ── Empty state ────────────────────────────────────────────────── */
-.empty-brain {
-  position: absolute;
-  left: 50%; top: 52%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 5;
-  width: 360px;
-  pointer-events: auto;
-}
-.empty-icon { font-size: 36px; margin-bottom: 14px; opacity: 0.45; filter: grayscale(0.2); }
+.empty-brain { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); text-align: center; z-index: 5; width: 360px; pointer-events: auto; }
+.empty-icon { font-size: 36px; margin-bottom: 14px; opacity: 0.45; }
 .empty-title { font-size: 22px; font-weight: 700; color: var(--fg-1); letter-spacing: -0.01em; margin-bottom: 8px; }
 .empty-sub { font-size: 13px; color: var(--fg-3); margin-bottom: 24px; line-height: 1.6; }
-.empty-cta {
-  background: var(--accent);
-  color: var(--fg-1);
-  font-weight: 600; font-size: 14px;
-  padding: 12px 26px; border-radius: var(--r-pill);
-  box-shadow: var(--glow-accent);
-  cursor: pointer; transition: all var(--dur-fast) var(--ease);
-  letter-spacing: 0.01em;
-}
+.empty-cta { background: var(--accent); color: var(--fg-1); font-weight: 600; font-size: 14px; padding: 12px 26px; border-radius: var(--r-pill); box-shadow: var(--glow-accent); cursor: pointer; transition: all var(--dur-fast) var(--ease); letter-spacing: 0.01em; }
 .empty-cta:hover { transform: translateY(-2px); box-shadow: var(--glow-accent), 0 8px 24px rgba(201,184,255,0.3); }
 
-/* ── Bottom CTA area ────────────────────────────────────────────── */
-.home-bottom {
-  position: absolute;
-  bottom: 32px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 6;
-}
-.down-cta {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  cursor: pointer; color: var(--fg-2);
-  transition: all var(--dur-fast) var(--ease);
-  user-select: none;
-}
+.home-bottom { position: absolute; bottom: 32px; left: 0; right: 0; display: flex; justify-content: center; z-index: 6; }
+.down-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; color: var(--fg-2); transition: all var(--dur-fast) var(--ease); user-select: none; }
 .down-cta:hover { color: var(--fg-1); transform: translateY(2px); }
-.down-arrow {
-  width: 46px; height: 46px;
-  border-radius: 50%;
-  background: var(--surface-1);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--hairline);
-  display: grid; place-items: center;
-  color: var(--accent-solid);
-  animation: bounceCta 2.6s ease-in-out infinite;
-}
-@keyframes bounceCta {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(7px); }
-}
+.down-arrow { width: 46px; height: 46px; border-radius: 50%; background: var(--surface-1); box-shadow: var(--shadow-md); border: 1px solid var(--hairline); display: grid; place-items: center; color: var(--accent-solid); animation: bounceCta 2.6s ease-in-out infinite; }
+@keyframes bounceCta { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
 .down-cta span { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; }
 
-.clean-card {
-  position: absolute;
-  right: 40px;
-  bottom: 32px;
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border-radius: var(--r-md);
-  padding: 14px 18px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--hairline);
-  display: flex; align-items: center; gap: 12px;
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-  z-index: 7;
-}
+.clean-card { position: absolute; right: 40px; bottom: 32px; background: var(--surface-1); backdrop-filter: var(--blur-glass); border-radius: var(--r-md); padding: 14px 18px; box-shadow: var(--shadow-md); border: 1px solid var(--hairline); display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all var(--dur-fast) var(--ease); z-index: 7; }
 .clean-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.clean-icon {
-  width: 28px; height: 28px;
-  border-radius: var(--r-sm);
-  background: var(--accent);
-  display: grid; place-items: center;
-  color: var(--fg-1);
-  font-size: 13px;
-  flex-shrink: 0;
-}
+.clean-icon { width: 28px; height: 28px; border-radius: var(--r-sm); background: var(--accent); display: grid; place-items: center; color: var(--fg-1); font-size: 13px; flex-shrink: 0; }
 .clean-ct { display: flex; flex-direction: column; }
 .clean-ct-title { font-size: 13px; font-weight: 600; color: var(--fg-1); }
 .clean-ct-sub { font-size: 11px; color: var(--fg-3); margin-top: 1px; }
 .clean-chev { color: var(--fg-3); font-size: 17px; margin-left: 2px; }
 
-/* ── List view ──────────────────────────────────────────────────── */
-.list-view {
-  display: none;
-  position: relative; z-index: 4;
-  max-width: 900px;
-  margin: 40px auto 0;
-  padding-bottom: 80px;
-}
-body.list-mode .brain-stage,
-body.list-mode .home-headline,
-body.list-mode .home-bottom,
-body.list-mode .clean-card { display: none !important; }
+.list-view { display: none; position: relative; z-index: 4; max-width: 900px; margin: 40px auto 0; padding-bottom: 80px; }
+body.list-mode .brain-stage, body.list-mode .home-headline, body.list-mode .home-bottom, body.list-mode .clean-card { display: none !important; }
 body.list-mode .home-stage { height: auto; min-height: 0; padding-top: 8px; }
 body.list-mode .list-view { display: block; }
-
-.list-head {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 22px; padding: 0 4px;
-}
-.list-head-left h2 {
-  font-size: 34px; font-weight: 800; letter-spacing: -0.02em;
-  color: var(--fg-1); margin-bottom: 4px;
-}
+.list-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 22px; padding: 0 4px; }
+.list-head-left h2 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--fg-1); margin-bottom: 4px; }
 .list-sub { font-size: 13px; color: var(--fg-3); }
 .list-meta { font-size: 11px; color: var(--fg-3); letter-spacing: 0.06em; }
-
 .list-rows { display: flex; flex-direction: column; gap: 10px; }
-.list-row {
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border-radius: var(--r-lg);
-  padding: 18px 22px;
-  display: grid;
-  grid-template-columns: 76px 1fr auto;
-  gap: 18px;
-  align-items: center;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--hairline);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-}
-.list-row:hover {
-  transform: translateX(4px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(201,184,255,0.35);
-  background: rgba(255,255,255,0.92);
-}
+.list-row { background: var(--surface-1); backdrop-filter: var(--blur-glass); border-radius: var(--r-lg); padding: 18px 22px; display: grid; grid-template-columns: 76px 1fr auto; gap: 18px; align-items: center; box-shadow: var(--shadow-sm); border: 1px solid var(--hairline); cursor: pointer; transition: all var(--dur-fast) var(--ease); }
+.list-row:hover { transform: translateX(4px); box-shadow: var(--shadow-md); border-color: rgba(201,184,255,0.35); background: rgba(255,255,255,0.92); }
 .list-row .lr-thumb { width: 76px; height: 76px; border-radius: var(--r-md); overflow: hidden; }
 .list-row .lr-title { font-size: 17px; font-weight: 700; color: var(--fg-1); margin-bottom: 4px; letter-spacing: -0.01em; }
-.list-row .lr-desc { font-size: 13px; color: var(--fg-2); margin-bottom: 10px; line-height: 1.5; }
+.list-row .lr-desc { font-size: 13px; color: var(--fg-2); margin-bottom: 8px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .list-row .lr-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .list-row .lr-time { font-family: 'Inter', monospace; font-size: 11px; color: var(--fg-3); text-align: right; white-space: nowrap; }
-.list-row .lr-region {
-  font-size: 10px; color: var(--accent-solid);
-  margin-top: 4px; letter-spacing: 0.04em;
-  display: flex; align-items: center; gap: 4px;
-  justify-content: flex-end;
-}
+.list-row .lr-region { font-size: 10px; color: var(--accent-solid); margin-top: 4px; letter-spacing: 0.04em; display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
 .lr-region-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; }
-
 .list-empty { text-align: center; padding: 80px 20px; color: var(--fg-3); }
 .list-empty .le-title { font-size: 18px; font-weight: 700; color: var(--fg-2); margin-bottom: 6px; }
 .list-empty .le-sub { font-size: 13px; }
 
-/* ── Region detail page ─────────────────────────────────────────── */
-.region-page {
-  padding: 20px 40px 56px 40px;
-  display: grid;
-  grid-template-columns: 92px 1fr 520px;
-  gap: 22px;
-  min-height: calc(100vh - var(--nav-h));
-}
-
-/* Side nav */
-.region-sidenav {
-  display: flex; flex-direction: column; gap: 6px;
-  align-items: center;
-  padding-top: 16px;
-}
-.region-icon {
-  width: 66px;
-  padding: 10px 6px 12px;
-  border-radius: var(--r-md);
-  display: flex; flex-direction: column; align-items: center; gap: 7px;
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-  color: var(--fg-3);
-}
+.region-page { padding: 20px 40px 56px 40px; display: grid; grid-template-columns: 92px 1fr 520px; gap: 22px; min-height: calc(100vh - var(--nav-h)); }
+.region-sidenav { display: flex; flex-direction: column; gap: 6px; align-items: center; padding-top: 16px; }
+.region-icon { width: 66px; padding: 10px 6px 12px; border-radius: var(--r-md); display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; transition: all var(--dur-fast) var(--ease); color: var(--fg-3); }
 .region-icon:hover { background: rgba(255,255,255,0.55); color: var(--fg-2); }
 .region-icon.active { background: var(--surface-1); box-shadow: var(--shadow-sm); color: var(--accent-solid); border: 1px solid var(--hairline); }
-.region-icon .ri-puck {
-  width: 34px; height: 34px;
-  border-radius: var(--r-sm);
-  background: rgba(236,234,230,0.8);
-  display: grid; place-items: center;
-  transition: all var(--dur-fast) var(--ease);
-}
-.region-icon.active .ri-puck {
-  background: var(--accent);
-  box-shadow: 0 4px 14px rgba(201,184,255,0.45);
-}
+.region-icon .ri-puck { width: 34px; height: 34px; border-radius: var(--r-sm); background: rgba(236,234,230,0.8); display: grid; place-items: center; transition: all var(--dur-fast) var(--ease); }
+.region-icon.active .ri-puck { background: var(--accent); box-shadow: 0 4px 14px rgba(201,184,255,0.45); }
 .region-icon .ri-label { font-size: 10px; font-weight: 500; text-align: center; line-height: 1.3; letter-spacing: 0.02em; }
-
-/* Brain canvas */
-.region-brain {
-  position: relative;
-  background:
-    radial-gradient(ellipse at 40% 30%, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0) 55%),
-    linear-gradient(180deg, rgba(255,255,255,0.38) 0%, rgba(238,236,252,0.55) 100%);
-  border-radius: 28px;
-  border: 1px solid var(--hairline);
-  overflow: hidden;
-  min-height: 680px;
-  display: flex; align-items: center; justify-content: center;
-}
-.region-brain-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 48% at 50% 48%, rgba(201,184,255,0.38) 0%, rgba(191,212,255,0.15) 50%, transparent 80%);
-  filter: blur(28px);
-}
+.region-brain { position: relative; background: radial-gradient(ellipse at 40% 30%, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0) 55%),linear-gradient(180deg, rgba(255,255,255,0.38) 0%, rgba(238,236,252,0.55) 100%); border-radius: 28px; border: 1px solid var(--hairline); overflow: hidden; min-height: 680px; display: flex; align-items: center; justify-content: center; }
+.region-brain-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 55% 48% at 50% 48%, rgba(201,184,255,0.38) 0%, rgba(191,212,255,0.15) 50%, transparent 80%); filter: blur(28px); }
 .region-brain svg { position: relative; z-index: 2; max-width: 88%; max-height: 88%; }
-.region-brain-meta {
-  position: absolute; left: 24px; top: 24px;
-  z-index: 3;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.brain-tag {
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  padding: 5px 12px;
-  border-radius: var(--r-pill);
-  font-size: 10px;
-  font-family: 'Inter', monospace;
-  color: var(--fg-2);
-  box-shadow: var(--shadow-sm);
-  width: fit-content;
-  letter-spacing: 0.04em;
-  display: flex; align-items: center; gap: 6px;
-  border: 1px solid var(--hairline);
-}
+.region-brain-meta { position: absolute; left: 24px; top: 24px; z-index: 3; display: flex; flex-direction: column; gap: 6px; }
+.brain-tag { background: var(--surface-1); backdrop-filter: var(--blur-glass); padding: 5px 12px; border-radius: var(--r-pill); font-size: 10px; font-family: 'Inter', monospace; color: var(--fg-2); box-shadow: var(--shadow-sm); width: fit-content; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; border: 1px solid var(--hairline); }
 .brain-tag-dot { width: 5px; height: 5px; border-radius: 50%; }
-
-/* Info panel */
 .region-info { display: flex; flex-direction: column; gap: 14px; }
-.info-card {
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border-radius: var(--r-xl);
-  padding: 26px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--hairline);
-}
-.region-title {
-  font-size: 34px; font-weight: 800; color: var(--fg-1);
-  letter-spacing: -0.02em; margin-bottom: 4px;
-}
-.region-en {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px; color: var(--fg-3);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
+.info-card { background: var(--surface-1); backdrop-filter: var(--blur-glass); border-radius: var(--r-xl); padding: 26px; box-shadow: var(--shadow-md); border: 1px solid var(--hairline); }
+.region-title { font-size: 34px; font-weight: 800; color: var(--fg-1); letter-spacing: -0.02em; margin-bottom: 4px; }
+.region-en { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--fg-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
 .region-desc { font-size: 14px; color: var(--fg-2); line-height: 1.7; margin-bottom: 22px; }
-
 .load-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
 .load-label { font-size: 11px; color: var(--fg-3); font-weight: 500; letter-spacing: 0.04em; }
 .load-state { font-size: 13px; font-weight: 700; color: var(--fg-1); }
 .load-bar { height: 7px; background: rgba(60,50,40,0.07); border-radius: var(--r-pill); overflow: hidden; margin-bottom: 9px; }
-.load-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: var(--r-pill);
-  box-shadow: 0 0 10px rgba(201,184,255,0.50);
-  transition: width var(--dur-slow) var(--ease);
-}
+.load-fill { height: 100%; background: var(--accent); border-radius: var(--r-pill); box-shadow: 0 0 10px rgba(201,184,255,0.50); transition: width var(--dur-slow) var(--ease); }
 .load-note { font-size: 12px; color: var(--fg-3); line-height: 1.5; }
-
-.section-h {
-  font-size: 13px; font-weight: 700; color: var(--fg-1);
-  margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
-  letter-spacing: 0.01em;
-}
-.section-h::before {
-  content: "";
-  width: 3px; height: 13px;
-  background: var(--accent);
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.section-count {
-  font-family: 'Inter', monospace;
-  font-size: 11px; color: var(--fg-3);
-  font-weight: 400; margin-left: auto;
-}
-
-/* Idea list */
+.section-h { font-size: 13px; font-weight: 700; color: var(--fg-1); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.01em; }
+.section-h::before { content: ""; width: 3px; height: 13px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+.section-count { font-family: 'Inter', monospace; font-size: 11px; color: var(--fg-3); font-weight: 400; margin-left: auto; }
 .idea-list { display: flex; flex-direction: column; gap: 8px; }
-.idea-card {
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  border-radius: var(--r-md);
-  padding: 14px;
-  display: flex; gap: 12px; align-items: flex-start;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--hairline);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-}
+.idea-card { background: var(--surface-1); backdrop-filter: var(--blur-glass); border-radius: var(--r-md); padding: 14px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm); border: 1px solid var(--hairline); cursor: pointer; transition: all var(--dur-fast) var(--ease); }
 .idea-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); border-color: rgba(201,184,255,0.35); }
 .idea-thumb { width: 60px; height: 60px; border-radius: var(--r-sm); overflow: hidden; flex-shrink: 0; }
 .idea-body { flex: 1; min-width: 0; }
 .idea-title { font-size: 14px; font-weight: 700; color: var(--fg-1); margin-bottom: 3px; letter-spacing: -0.01em; }
 .idea-desc { font-size: 12px; color: var(--fg-2); line-height: 1.5; margin-bottom: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .idea-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-.chip {
-  font-size: 10px; padding: 2px 8px; border-radius: var(--r-pill);
-  background: rgba(201,184,255,0.15); color: var(--accent-solid); font-weight: 500;
-  border: 1px solid rgba(201,184,255,0.25);
-}
+.chip { font-size: 10px; padding: 2px 8px; border-radius: var(--r-pill); background: rgba(201,184,255,0.15); color: var(--accent-solid); font-weight: 500; border: 1px solid rgba(201,184,255,0.25); }
 .idea-time { font-size: 11px; color: var(--fg-3); font-family: 'Inter', monospace; margin-left: auto; white-space: nowrap; }
-
-/* Balance card */
-.balance-card {
-  background: linear-gradient(135deg, rgba(246,244,255,0.95) 0%, rgba(236,232,252,0.90) 100%);
-  border-radius: var(--r-xl);
-  padding: 22px;
-  border: 1px solid rgba(201,184,255,0.30);
-  position: relative; overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-.balance-card::before {
-  content: "";
-  position: absolute; top: -50px; right: -50px;
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,184,255,0.45) 0%, transparent 70%);
-  filter: blur(24px);
-}
+.balance-card { background: linear-gradient(135deg, rgba(246,244,255,0.95) 0%, rgba(236,232,252,0.90) 100%); border-radius: var(--r-xl); padding: 22px; border: 1px solid rgba(201,184,255,0.30); position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+.balance-card::before { content: ""; position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(201,184,255,0.45) 0%, transparent 70%); filter: blur(24px); }
 .balance-text { font-size: 14px; color: var(--fg-1); line-height: 1.7; margin-bottom: 14px; position: relative; font-weight: 500; }
 .balance-actions { display: flex; gap: 7px; flex-wrap: nowrap; position: relative; overflow-x: auto; }
-.pill {
-  background: var(--surface-1);
-  backdrop-filter: var(--blur-glass);
-  color: var(--fg-2);
-  border: 1px solid var(--hairline);
-  padding: 6px 14px;
-  border-radius: var(--r-pill);
-  font-size: 12px; font-weight: 500;
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-  white-space: nowrap;
-}
-.pill:hover {
-  background: var(--accent);
-  color: var(--fg-1);
-  border-color: transparent;
-  transform: translateY(-1px);
-  box-shadow: var(--glow-accent);
-}
+.pill { background: var(--surface-1); backdrop-filter: var(--blur-glass); color: var(--fg-2); border: 1px solid var(--hairline); padding: 6px 14px; border-radius: var(--r-pill); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--dur-fast) var(--ease); white-space: nowrap; }
+.pill:hover { background: var(--accent); color: var(--fg-1); border-color: transparent; transform: translateY(-1px); box-shadow: var(--glow-accent); }
 
-/* ── Modal: Add idea ────────────────────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(42,39,35,0.35);
-  backdrop-filter: var(--blur-modal);
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
+/* ── Modals shared ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(42,39,35,0.35); backdrop-filter: var(--blur-modal); z-index: 100; display: none; align-items: center; justify-content: center; }
 .modal-overlay.show { display: flex; }
-.modal {
-  width: 480px;
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: var(--blur-glass);
-  border-radius: var(--r-xl);
-  padding: 34px;
-  box-shadow: 0 32px 88px rgba(42,39,35,0.22), inset 0 1px 0 rgba(255,255,255,0.9);
-  border: 1px solid var(--hairline);
-  transform: scale(0.96);
-  opacity: 0;
-  transition: all var(--dur-fast) var(--ease);
-}
+.modal { width: 480px; background: rgba(255,255,255,0.96); backdrop-filter: var(--blur-glass); border-radius: var(--r-xl); padding: 34px; box-shadow: 0 32px 88px rgba(42,39,35,0.22), inset 0 1px 0 rgba(255,255,255,0.9); border: 1px solid var(--hairline); transform: scale(0.96); opacity: 0; transition: all var(--dur-fast) var(--ease); max-height: 90vh; overflow-y: auto; }
 .modal-overlay.show .modal { transform: scale(1); opacity: 1; }
-
 .modal-h { font-size: 22px; font-weight: 700; color: var(--fg-1); margin-bottom: 6px; letter-spacing: -0.01em; }
 .modal-h .em { background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .modal-sub { font-size: 13px; color: var(--fg-3); margin-bottom: 20px; line-height: 1.6; }
-.modal textarea {
-  width: 100%; height: 118px;
-  border: 1px solid rgba(60,50,40,0.12);
-  background: rgba(244,242,239,0.70);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  font-family: inherit; font-size: 15px; color: var(--fg-1);
-  resize: none; outline: none;
-  transition: all var(--dur-fast) var(--ease);
-  line-height: 1.6;
-}
-.modal textarea::placeholder { color: var(--fg-3); }
-.modal textarea:focus {
-  border-color: var(--accent-solid);
-  background: rgba(255,255,255,0.90);
-  box-shadow: 0 0 0 4px rgba(201,184,255,0.16);
-}
-.modal-tags { display: flex; gap: 7px; margin-top: 13px; flex-wrap: wrap; }
-.modal-tag {
-  font-size: 11px; padding: 5px 11px;
-  border-radius: var(--r-pill);
-  background: rgba(244,242,239,0.80);
-  color: var(--fg-2);
-  border: 1px solid rgba(60,50,40,0.10);
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease);
-}
-.modal-tag:hover, .modal-tag.on {
-  background: rgba(201,184,255,0.18);
-  color: var(--accent-solid);
-  border-color: rgba(201,184,255,0.40);
-}
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
 .btn { padding: 10px 22px; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; cursor: pointer; transition: all var(--dur-fast) var(--ease); letter-spacing: 0.01em; }
 .btn-ghost { background: rgba(244,242,239,0.80); color: var(--fg-2); }
 .btn-ghost:hover { background: rgba(236,234,230,0.90); color: var(--fg-1); }
-.btn-primary {
-  background: var(--accent);
-  color: var(--fg-1);
-  box-shadow: var(--glow-accent);
-}
+.btn-primary { background: var(--accent); color: var(--fg-1); box-shadow: var(--glow-accent); }
 .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--glow-accent), 0 8px 24px rgba(201,184,255,0.28); }
+.btn-danger { color: #C84040 !important; }
+.btn-danger:hover { background: rgba(200,64,64,0.08) !important; color: #C84040 !important; }
+.btn-block { width: 100%; text-align: center; padding: 12px; }
 
-/* ── Modal: Detail ──────────────────────────────────────────────── */
-.detail-modal .modal { width: 520px; }
+/* ── Form fields ── */
+.field-label { display: block; font-size: 12px; font-weight: 600; color: var(--fg-2); margin: 14px 0 6px; letter-spacing: 0.02em; }
+.field-label .req { color: #E06060; margin-left: 2px; }
+.field-label .opt { color: var(--fg-3); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.field-error { font-size: 11px; color: #C84040; margin-top: 4px; display: none; }
+.field-error.show { display: block; }
+.modal input[type="text"] { width: 100%; padding: 10px 14px; border: 1px solid rgba(60,50,40,0.12); background: rgba(244,242,239,0.70); border-radius: var(--r-md); font-family: inherit; font-size: 14px; color: var(--fg-1); outline: none; transition: all var(--dur-fast) var(--ease); }
+.modal input[type="text"]:focus { border-color: var(--accent-solid); background: rgba(255,255,255,0.90); box-shadow: 0 0 0 4px rgba(201,184,255,0.16); }
+.modal input[type="text"]::placeholder { color: var(--fg-3); }
+.modal textarea { width: 100%; height: 80px; border: 1px solid rgba(60,50,40,0.12); background: rgba(244,242,239,0.70); border-radius: var(--r-md); padding: 10px 14px; font-family: inherit; font-size: 14px; color: var(--fg-1); resize: none; outline: none; transition: all var(--dur-fast) var(--ease); line-height: 1.6; }
+.modal textarea::placeholder { color: var(--fg-3); }
+.modal textarea:focus { border-color: var(--accent-solid); background: rgba(255,255,255,0.90); box-shadow: 0 0 0 4px rgba(201,184,255,0.16); }
+
+/* ── Tag chip editor ── */
+.tag-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; min-height: 22px; }
+.tag-chip-rm { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 8px 3px 10px; border-radius: var(--r-pill); background: rgba(201,184,255,0.15); color: var(--accent-solid); border: 1px solid rgba(201,184,255,0.30); }
+.tag-chip-rm button { width: 14px; height: 14px; border-radius: 50%; font-size: 11px; color: var(--accent-solid); opacity: 0.6; display: grid; place-items: center; cursor: pointer; padding: 0; line-height: 1; }
+.tag-chip-rm button:hover { opacity: 1; }
+
+/* ── Region picker ── */
+.region-picker { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.region-pick-btn { padding: 6px 13px; font-size: 12px; font-weight: 500; border: 1px solid rgba(60,50,40,0.12); background: rgba(244,242,239,0.80); color: var(--fg-2); border-radius: var(--r-pill); cursor: pointer; transition: all var(--dur-fast) var(--ease); font-family: inherit; }
+.region-pick-btn:hover { background: rgba(255,255,255,0.90); color: var(--fg-1); }
+.region-pick-btn.selected { background: rgba(201,184,255,0.20); color: var(--accent-solid); border-color: rgba(201,184,255,0.45); font-weight: 600; }
+
+/* ── Status badges ── */
+.status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: var(--r-pill); letter-spacing: 0.03em; font-family: 'Inter', monospace; }
+.status-badge.frozen { background: rgba(191,212,255,0.22); color: #4070C0; border: 1px solid rgba(191,212,255,0.50); }
+.status-badge.idle { background: rgba(180,176,168,0.15); color: var(--fg-2); border: 1px solid rgba(180,176,168,0.30); }
+.status-badge.occupied { background: rgba(255,196,100,0.18); color: #A06000; border: 1px solid rgba(255,196,100,0.40); }
+
+/* ── Defrost modal ── */
+.defrost-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #4070C0; background: rgba(191,212,255,0.20); border: 1px solid rgba(191,212,255,0.45); padding: 4px 12px; border-radius: var(--r-pill); letter-spacing: 0.03em; margin-bottom: 14px; }
+.defrost-desc-box { margin: 12px 0 18px; padding: 12px 14px; background: rgba(244,242,239,0.70); border-radius: var(--r-md); font-size: 13px; color: var(--fg-2); line-height: 1.6; border: 1px solid rgba(60,50,40,0.08); }
+.defrost-actions { display: flex; flex-direction: column; gap: 8px; }
+.defrost-actions .btn { text-align: center; }
+
+/* ── Detail modal ── */
+.detail-modal .modal { width: 540px; }
+.detail-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+.detail-thumb-wrap { width: 58px; height: 58px; border-radius: 14px; overflow: hidden; flex-shrink: 0; }
+.detail-title-area { flex: 1; min-width: 0; }
+.detail-status-row { margin-top: 6px; }
+.detail-section { margin: 12px 0; }
+.detail-section-label { font-size: 11px; color: var(--fg-3); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
+.detail-section-value { font-size: 14px; color: var(--fg-1); line-height: 1.6; }
+.detail-nextstep-box { padding: 10px 13px; margin-top: 10px; background: rgba(255,196,100,0.10); border: 1px solid rgba(255,196,100,0.30); border-radius: var(--r-md); }
+.detail-nextstep-label { font-size: 11px; font-weight: 600; color: #A06000; margin-bottom: 3px; }
+.detail-nextstep-value { font-size: 13px; color: #705000; }
+.detail-footer { display: flex; gap: 8px; align-items: center; margin-top: 18px; }
+.detail-footer .left { flex: 1; display: flex; gap: 6px; }
+
+/* ── Trash page ── */
+.trash-main { max-width: 900px; margin: 0 auto; padding: 40px; }
+.trash-head { margin-bottom: 28px; }
+.trash-head h2 { font-size: 30px; font-weight: 800; color: var(--fg-1); letter-spacing: -0.02em; margin-bottom: 4px; }
+.trash-head p { font-size: 13px; color: var(--fg-3); }
+.trash-row { background: var(--surface-1); backdrop-filter: var(--blur-glass); border-radius: var(--r-lg); padding: 16px 20px; display: flex; gap: 14px; align-items: center; box-shadow: var(--shadow-sm); border: 1px solid var(--hairline); margin-bottom: 10px; }
+.trash-row .tr-thumb { width: 52px; height: 52px; border-radius: var(--r-sm); overflow: hidden; flex-shrink: 0; opacity: 0.6; }
+.trash-row .tr-body { flex: 1; min-width: 0; }
+.trash-row .tr-title { font-size: 15px; font-weight: 700; color: var(--fg-2); text-decoration: line-through; opacity: 0.7; margin-bottom: 2px; }
+.trash-row .tr-meta { font-size: 11px; color: var(--fg-3); }
+.trash-row .tr-acts { display: flex; gap: 6px; flex-shrink: 0; }
+.trash-btn { padding: 6px 12px; font-size: 12px; font-weight: 500; border-radius: var(--r-pill); font-family: inherit; transition: all var(--dur-fast) var(--ease); cursor: pointer; border: 1px solid; }
+.trash-btn-restore { background: rgba(244,242,239,0.90); color: var(--fg-2); border-color: rgba(60,50,40,0.15); }
+.trash-btn-restore:hover { background: white; color: var(--fg-1); }
+.trash-btn-perm { background: rgba(200,64,64,0.08); color: #C84040; border-color: rgba(200,64,64,0.22); }
+.trash-btn-perm:hover { background: rgba(200,64,64,0.15); }
+.trash-empty { text-align: center; padding: 80px 20px; }
+.trash-empty .le-title { font-size: 18px; font-weight: 700; color: var(--fg-2); margin-bottom: 6px; }
+.trash-empty .le-sub { font-size: 13px; color: var(--fg-3); }
 </style>
 </head>
 <body>
-
 <div class="ambient"></div>
 
-<!-- ═══════════════════════ PAGE 1: HOME ═══════════════════════ -->
+<!-- ═══════════════ PAGE 1: HOME ═══════════════ -->
 <div class="page active" id="page-home">
-
   <header class="topnav">
     <div class="brand">
       <div class="brand-mark">
-        <span class="brand-name">Mindspace</span>
+        <span class="brand-name">BrainDrop</span>
         <span class="brand-dot"></span>
       </div>
       <div class="brand-sub">你的靈感宇宙</div>
     </div>
     <div class="nav-tools">
-      <button class="icon-btn" aria-label="搜尋">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      </button>
-      <button class="icon-btn" aria-label="通知">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-      </button>
+      <button class="icon-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
       <div class="avatar"></div>
     </div>
   </header>
@@ -895,9 +323,15 @@ body.list-mode .list-view { display: block; }
       </div>
       <div class="sb-label">靈感<br/>地圖</div>
     </div>
-    <div class="sb-item" onclick="clearBrain()">
+    <div class="sb-item" onclick="goToTrash()">
       <div class="sb-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </div>
+      <div class="sb-label">垃圾桶</div>
+    </div>
+    <div class="sb-item" onclick="clearBrain()">
+      <div class="sb-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
       <div class="sb-label">清空<br/>大腦</div>
     </div>
@@ -908,10 +342,8 @@ body.list-mode .list-view { display: block; }
       <h1>歡迎回來，<span class="accent-text">創造者。</span></h1>
       <p>這裡收藏著你曾經想嘗試的所有可能性。</p>
     </div>
-
     <div class="brain-stage" id="brain-stage">
       <div class="brain-halo"></div>
-
       <div class="empty-brain" id="empty-brain">
         <div class="empty-icon">◎</div>
         <div class="empty-title">大腦已清空</div>
@@ -919,7 +351,6 @@ body.list-mode .list-view { display: block; }
         <button class="empty-cta" id="empty-add-btn">＋ 新增你的第一個靈感</button>
       </div>
     </div>
-
     <div class="home-bottom">
       <div class="down-cta" onclick="goToRegion()">
         <div class="down-arrow">
@@ -928,7 +359,6 @@ body.list-mode .list-view { display: block; }
         <span>探索你的靈感宇宙</span>
       </div>
     </div>
-
     <div class="clean-card">
       <div class="clean-icon">✦</div>
       <div class="clean-ct">
@@ -937,35 +367,31 @@ body.list-mode .list-view { display: block; }
       </div>
       <div class="clean-chev">›</div>
     </div>
-
-    <!-- List view -->
     <section class="list-view" id="list-view">
       <div class="list-head">
         <div class="list-head-left">
           <h2>靈感清單</h2>
-          <p class="list-sub">從最近到較舊。點擊任一條以記錄細節。</p>
+          <p class="list-sub">從最近到較舊。點擊任一條查看細節。</p>
         </div>
-        <div class="list-meta"><span id="list-count">00</span> 個靈感 · 最近優先</div>
+        <div class="list-meta"><span id="list-count">0</span> 個靈感 · 最近優先</div>
       </div>
       <div class="list-rows" id="list-rows"></div>
     </section>
   </main>
 </div>
 
-<!-- ═══════════════════════ PAGE 2: REGION ═══════════════════════ -->
+<!-- ═══════════════ PAGE 2: REGION ═══════════════ -->
 <div class="page" id="page-region">
-
   <header class="topnav">
     <div class="nav-back" onclick="goToHome()">
       <span class="nav-back-arrow">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
       </span>
       <div class="brand-mark">
-        <span class="brand-name">Mindspace</span>
+        <span class="brand-name">BrainDrop</span>
         <span class="brand-dot"></span>
       </div>
     </div>
-
     <nav class="nav-tabs" id="region-tabs">
       <button class="nav-tab active" data-region="prefrontal">前額葉皮質</button>
       <button class="nav-tab" data-region="hippocampus">海馬迴</button>
@@ -973,200 +399,140 @@ body.list-mode .list-view { display: block; }
       <button class="nav-tab" data-region="dmn">預設模式網路</button>
       <button class="nav-tab" data-region="reward">獎勵系統</button>
     </nav>
-
     <div class="nav-tools">
-      <button class="icon-btn" aria-label="搜尋">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      </button>
-      <button class="icon-btn" aria-label="通知">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-      </button>
+      <button class="icon-btn" onclick="goToHome()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>
       <div class="avatar"></div>
     </div>
   </header>
-
   <main class="region-page">
-
-    <!-- Side nav -->
     <div class="region-sidenav" id="region-sidenav">
       <div class="region-icon active" data-region="prefrontal">
-        <div class="ri-puck">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 10h6M9 14h4"/></svg>
-        </div>
+        <div class="ri-puck"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 10h6M9 14h4"/></svg></div>
         <div class="ri-label">前額葉<br/>皮質</div>
       </div>
       <div class="region-icon" data-region="hippocampus">
-        <div class="ri-puck">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12c0-4 3-7 7-7s7 3 7 7-3 7-7 7c-2 0-4-1-5-2"/><circle cx="12" cy="12" r="2"/></svg>
-        </div>
+        <div class="ri-puck"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12c0-4 3-7 7-7s7 3 7 7-3 7-7 7c-2 0-4-1-5-2"/><circle cx="12" cy="12" r="2"/></svg></div>
         <div class="ri-label">海馬迴</div>
       </div>
       <div class="region-icon" data-region="parietal">
-        <div class="ri-puck">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9-9 9z"/></svg>
-        </div>
+        <div class="ri-puck"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9-9 9z"/></svg></div>
         <div class="ri-label">頂葉</div>
       </div>
       <div class="region-icon" data-region="dmn">
-        <div class="ri-puck">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M4 12h4M16 12h4M12 4v4M12 16v4"/></svg>
-        </div>
+        <div class="ri-puck"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M4 12h4M16 12h4M12 4v4M12 16v4"/></svg></div>
         <div class="ri-label">預設模<br/>式網路</div>
       </div>
       <div class="region-icon" data-region="reward">
-        <div class="ri-puck">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>
-        </div>
+        <div class="ri-puck"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg></div>
         <div class="ri-label">獎勵<br/>系統</div>
       </div>
     </div>
-
-    <!-- Brain visualization -->
     <section class="region-brain">
       <div class="region-brain-glow"></div>
       <div class="region-brain-meta">
-        <div class="brain-tag">
-          <span class="brain-tag-dot" style="background: var(--accent-b);"></span>
-          <span id="region-tag-en">PREFRONTAL CORTEX</span>
-        </div>
-        <div class="brain-tag" style="margin-top:2px;">
-          <span class="brain-tag-dot" style="background: var(--accent-c);"></span>
-          <span>即時投影 · active region</span>
-        </div>
+        <div class="brain-tag"><span class="brain-tag-dot" style="background:var(--accent-b);"></span><span id="region-tag-en">PREFRONTAL CORTEX</span></div>
+        <div class="brain-tag" style="margin-top:2px;"><span class="brain-tag-dot" style="background:var(--accent-c);"></span><span>即時投影 · active region</span></div>
       </div>
-
       <svg viewBox="0 0 680 600" width="680" height="600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <radialGradient id="rFill" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#E8E2FF" stop-opacity="0.55"/>
-            <stop offset="55%" stop-color="#C9B8FF" stop-opacity="0.22"/>
-            <stop offset="100%" stop-color="#BFD4FF" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="rStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#BFD4FF" stop-opacity="0.75"/>
-            <stop offset="100%" stop-color="#FAC8E2" stop-opacity="0.55"/>
-          </linearGradient>
-          <radialGradient id="hs" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#C9B8FF" stop-opacity="0.90"/>
-            <stop offset="55%" stop-color="#BFD4FF" stop-opacity="0.45"/>
-            <stop offset="100%" stop-color="#BFD4FF" stop-opacity="0"/>
-          </radialGradient>
-          <filter id="glow3" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
+          <radialGradient id="rFill" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E8E2FF" stop-opacity="0.55"/><stop offset="55%" stop-color="#C9B8FF" stop-opacity="0.22"/><stop offset="100%" stop-color="#BFD4FF" stop-opacity="0"/></radialGradient>
+          <linearGradient id="rStroke" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#BFD4FF" stop-opacity="0.75"/><stop offset="100%" stop-color="#FAC8E2" stop-opacity="0.55"/></linearGradient>
+          <radialGradient id="hs" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#C9B8FF" stop-opacity="0.90"/><stop offset="55%" stop-color="#BFD4FF" stop-opacity="0.45"/><stop offset="100%" stop-color="#BFD4FF" stop-opacity="0"/></radialGradient>
+          <filter id="glow3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
-
         <g filter="url(#glow3)">
-          <!-- Brain silhouette -->
-          <path d="M340 58 C225 58,125 108,90 185 C52 200,22 242,28 290 C33 330,53 362,82 378 C72 414,92 458,132 485 C127 526,162 566,212 574 C248 593,302 598,340 593 C378 598,432 593,468 574 C518 566,553 526,548 485 C588 458,608 414,598 378 C627 362,647 330,652 290 C658 242,628 200,590 185 C555 108,455 58,340 58 Z"
-                fill="url(#rFill)" stroke="url(#rStroke)" stroke-width="1.5"/>
-          <path d="M340 63 C338 175,344 318,340 456 C338 536,342 578,340 590"
-                stroke="url(#rStroke)" stroke-width="1" fill="none" opacity="0.45"/>
-          <!-- Gyri L -->
+          <path d="M340 58 C225 58,125 108,90 185 C52 200,22 242,28 290 C33 330,53 362,82 378 C72 414,92 458,132 485 C127 526,162 566,212 574 C248 593,302 598,340 593 C378 598,432 593,468 574 C518 566,553 526,548 485 C588 458,608 414,598 378 C627 362,647 330,652 290 C658 242,628 200,590 185 C555 108,455 58,340 58 Z" fill="url(#rFill)" stroke="url(#rStroke)" stroke-width="1.5"/>
+          <path d="M340 63 C338 175,344 318,340 456 C338 536,342 578,340 590" stroke="url(#rStroke)" stroke-width="1" fill="none" opacity="0.45"/>
           <path d="M90 185 C136 175,195 190,244 210 C284 210,314 225,334 254" stroke="#BFD4FF" stroke-width="0.8" fill="none" opacity="0.45"/>
           <path d="M82 298 C136 288,194 308,242 308 C282 312,312 302,338 318" stroke="#BFD4FF" stroke-width="0.8" fill="none" opacity="0.45"/>
           <path d="M102 398 C156 408,216 398,264 418 C304 408,324 422,340 422" stroke="#BFD4FF" stroke-width="0.8" fill="none" opacity="0.45"/>
-          <!-- Gyri R -->
           <path d="M590 185 C544 175,485 190,436 210 C396 210,366 225,346 254" stroke="#FAC8E2" stroke-width="0.8" fill="none" opacity="0.45"/>
           <path d="M598 298 C544 288,486 308,438 308 C398 312,368 302,342 318" stroke="#FAC8E2" stroke-width="0.8" fill="none" opacity="0.45"/>
           <path d="M578 398 C524 408,464 398,416 418 C376 408,356 422,340 422" stroke="#FAC8E2" stroke-width="0.8" fill="none" opacity="0.45"/>
         </g>
-
-        <!-- Hotspot -->
         <ellipse id="hotspotEl" cx="340" cy="158" rx="176" ry="88" fill="url(#hs)" opacity="0.80"/>
-
-        <!-- Neural network -->
         <g opacity="0.65">
           <g stroke="#C9B8FF" stroke-width="0.65" fill="none">
-            <line x1="196" y1="175" x2="272" y2="136"/>
-            <line x1="272" y1="136" x2="340" y2="175"/>
-            <line x1="340" y1="175" x2="416" y2="136"/>
-            <line x1="416" y1="136" x2="488" y2="175"/>
-            <line x1="196" y1="175" x2="234" y2="284"/>
-            <line x1="234" y1="284" x2="340" y2="316"/>
-            <line x1="340" y1="316" x2="448" y2="284"/>
-            <line x1="448" y1="284" x2="488" y2="175"/>
-            <line x1="234" y1="284" x2="312" y2="416"/>
-            <line x1="312" y1="416" x2="370" y2="416"/>
-            <line x1="370" y1="416" x2="448" y2="284"/>
-            <line x1="312" y1="416" x2="340" y2="504"/>
-            <line x1="340" y1="504" x2="370" y2="416"/>
+            <line x1="196" y1="175" x2="272" y2="136"/><line x1="272" y1="136" x2="340" y2="175"/><line x1="340" y1="175" x2="416" y2="136"/><line x1="416" y1="136" x2="488" y2="175"/>
+            <line x1="196" y1="175" x2="234" y2="284"/><line x1="234" y1="284" x2="340" y2="316"/><line x1="340" y1="316" x2="448" y2="284"/><line x1="448" y1="284" x2="488" y2="175"/>
+            <line x1="234" y1="284" x2="312" y2="416"/><line x1="312" y1="416" x2="370" y2="416"/><line x1="370" y1="416" x2="448" y2="284"/>
+            <line x1="312" y1="416" x2="340" y2="504"/><line x1="340" y1="504" x2="370" y2="416"/>
           </g>
-          <g fill="#C9B8FF">
-            <circle cx="196" cy="175" r="3"/>
-            <circle cx="272" cy="136" r="4" fill="#BFD4FF"/>
-            <circle cx="340" cy="175" r="4.5" fill="#E8E2FF"/>
-            <circle cx="416" cy="136" r="4" fill="#BFD4FF"/>
-            <circle cx="488" cy="175" r="3"/>
-            <circle cx="234" cy="284" r="3.5"/>
-            <circle cx="340" cy="316" r="4"/>
-            <circle cx="448" cy="284" r="3.5"/>
-            <circle cx="312" cy="416" r="3"/>
-            <circle cx="370" cy="416" r="3"/>
-            <circle cx="340" cy="504" r="3"/>
-          </g>
-          <g fill="rgba(255,255,255,0.9)">
-            <circle cx="272" cy="136" r="1.5"/>
-            <circle cx="340" cy="175" r="1.8"/>
-            <circle cx="416" cy="136" r="1.5"/>
-          </g>
+          <g fill="#C9B8FF"><circle cx="196" cy="175" r="3"/><circle cx="272" cy="136" r="4" fill="#BFD4FF"/><circle cx="340" cy="175" r="4.5" fill="#E8E2FF"/><circle cx="416" cy="136" r="4" fill="#BFD4FF"/><circle cx="488" cy="175" r="3"/><circle cx="234" cy="284" r="3.5"/><circle cx="340" cy="316" r="4"/><circle cx="448" cy="284" r="3.5"/><circle cx="312" cy="416" r="3"/><circle cx="370" cy="416" r="3"/><circle cx="340" cy="504" r="3"/></g>
+          <g fill="rgba(255,255,255,0.9)"><circle cx="272" cy="136" r="1.5"/><circle cx="340" cy="175" r="1.8"/><circle cx="416" cy="136" r="1.5"/></g>
         </g>
       </svg>
     </section>
-
-    <!-- Info panel -->
     <aside class="region-info">
       <div class="info-card">
         <div class="region-title" id="region-title">前額葉皮質</div>
         <div class="region-en" id="region-en">Prefrontal Cortex</div>
         <div class="region-desc" id="region-desc">負責規劃、決策、目標設定、時間管理與自我控制。</div>
-        <div class="load-row">
-          <span class="load-label">目前負荷狀態</span>
-          <span class="load-state" id="load-state">偏高</span>
-        </div>
+        <div class="load-row"><span class="load-label">目前負荷狀態</span><span class="load-state" id="load-state">—</span></div>
         <div class="load-bar"><div class="load-fill" id="load-fill" style="width:0%"></div></div>
-        <div class="load-note" id="load-note">近期有較多規劃與決策任務</div>
+        <div class="load-note" id="load-note"></div>
       </div>
-
       <div>
-        <div class="section-h">
-          在此區域的靈感
-          <span class="section-count" id="idea-count">03</span>
-        </div>
+        <div class="section-h">在此區域的靈感<span class="section-count" id="idea-count">00</span></div>
         <div class="idea-list" id="idea-list"></div>
       </div>
-
       <div>
         <div class="section-h">建議平衡</div>
         <div class="balance-card">
-          <div class="balance-text" id="balance-text">你的前額葉正在高負荷運作，建議安排恢復型活動。</div>
-          <div class="balance-actions" id="balance-actions">
-            <button class="pill">散步</button>
-            <button class="pill">冥想</button>
-            <button class="pill">創作</button>
-            <button class="pill">運動</button>
-          </div>
+          <div class="balance-text" id="balance-text"></div>
+          <div class="balance-actions" id="balance-actions"></div>
         </div>
       </div>
     </aside>
   </main>
 </div>
 
-<!-- ═══════════════════════ ADD MODAL ═══════════════════════ -->
+<!-- ═══════════════ PAGE 3: TRASH ═══════════════ -->
+<div class="page" id="page-trash">
+  <header class="topnav">
+    <div class="nav-back" onclick="goToHome()">
+      <span class="nav-back-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></span>
+      <div class="brand-mark"><span class="brand-name">BrainDrop</span><span class="brand-dot"></span></div>
+    </div>
+    <div style="font-size:14px;font-weight:600;color:var(--fg-2);">垃圾桶</div>
+    <div class="nav-tools"><div class="avatar"></div></div>
+  </header>
+  <div class="trash-main">
+    <div class="trash-head">
+      <h2>垃圾桶</h2>
+      <p>已刪除的靈感。還原後會重新計時 48 小時冷凍期。</p>
+    </div>
+    <div id="trash-rows"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADD MODAL ═══════════════ -->
 <div class="modal-overlay" id="add-modal">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="新增靈感">
+  <div class="modal" style="width:540px;" role="dialog" aria-modal="true" aria-label="新增靈感">
     <div class="modal-h">放入<span class="em">大腦</span></div>
     <div class="modal-sub">捕捉這一刻浮現的可能性，之後再去探索。</div>
-    <textarea id="add-input" placeholder="此刻腦中浮現什麼..."></textarea>
-    <div class="modal-tags" id="add-tags">
-      <span class="modal-tag">規劃</span>
-      <span class="modal-tag">創作</span>
-      <span class="modal-tag">學習</span>
-      <span class="modal-tag">產品</span>
-      <span class="modal-tag">生活</span>
-      <span class="modal-tag">副業</span>
+
+    <label class="field-label" style="margin-top:0;">靈感名稱 <span class="req">*</span></label>
+    <input type="text" id="add-title" placeholder="用一句話描述這個靈感..." />
+    <div class="field-error" id="add-title-err">請輸入靈感名稱</div>
+
+    <label class="field-label">補充說明 <span class="opt">選填</span></label>
+    <textarea id="add-desc" placeholder="更多細節、背景、為什麼有這個想法..."></textarea>
+
+    <label class="field-label">標籤 <span class="opt">選填，輸入後按 Enter</span></label>
+    <input type="text" id="add-tag-input" placeholder="輸入標籤後按 Enter..." />
+    <div class="tag-chips" id="add-tag-chips"></div>
+
+    <label class="field-label">腦區 <span class="req">*</span></label>
+    <div class="region-picker" id="add-region-picker">
+      <button class="region-pick-btn" data-region="prefrontal">前額葉皮質</button>
+      <button class="region-pick-btn" data-region="hippocampus">海馬迴</button>
+      <button class="region-pick-btn" data-region="parietal">頂葉</button>
+      <button class="region-pick-btn" data-region="dmn">預設模式</button>
+      <button class="region-pick-btn" data-region="reward">獎勵系統</button>
     </div>
+    <div class="field-error" id="add-region-err">請選擇靈感所屬腦區</div>
+
     <div class="modal-actions">
       <button class="btn btn-ghost" id="add-cancel">取消</button>
       <button class="btn btn-primary" id="add-submit">放入大腦</button>
@@ -1174,115 +540,240 @@ body.list-mode .list-view { display: block; }
   </div>
 </div>
 
-<!-- ═══════════════════════ DETAIL MODAL ═══════════════════════ -->
-<div class="modal-overlay detail-modal" id="detail-modal">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="靈感細節">
-    <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
-      <div id="detail-thumb" style="width:58px;height:58px;border-radius:14px;overflow:hidden;flex-shrink:0;"></div>
-      <div style="flex:1;min-width:0;">
-        <div class="modal-h" style="font-size:20px;margin-bottom:4px;" id="detail-title">靈感標題</div>
-        <div class="modal-sub" style="margin-bottom:0;">補充這個靈感的細節、想法或下一步。</div>
+<!-- ═══════════════ DEFROST MODAL ═══════════════ -->
+<div class="modal-overlay" id="defrost-modal">
+  <div class="modal" style="width:480px;" role="dialog" aria-modal="true" aria-label="靈感解凍追問">
+    <div class="defrost-badge">🧊 48h 已到，冷凍解除</div>
+    <div class="modal-h" style="margin-bottom:4px;">冷靜後，你還想做</div>
+    <div class="modal-h"><span class="em" id="defrost-title">這件事</span>嗎？</div>
+    <div class="defrost-desc-box" id="defrost-desc"></div>
+
+    <div class="defrost-actions" id="defrost-main-btns">
+      <button class="btn btn-primary btn-block" id="defrost-occupy">現在做 →</button>
+      <button class="btn btn-ghost btn-block" id="defrost-idle">未來再說，先放著</button>
+      <button class="btn btn-ghost btn-block btn-danger" id="defrost-delete">不做了，丟掉</button>
+    </div>
+
+    <div id="defrost-nextstep-area" style="display:none;">
+      <label class="field-label">你的下一步是什麼？ <span class="opt">選填</span></label>
+      <input type="text" id="defrost-nextstep-input" placeholder="例如：明天午餐前開始查資料..." />
+      <div class="modal-actions" style="margin-top:14px;">
+        <button class="btn btn-ghost" id="defrost-nextstep-back">上一步</button>
+        <button class="btn btn-primary" id="defrost-nextstep-confirm">確認，開始行動</button>
       </div>
     </div>
-    <textarea id="detail-input" placeholder="關於這個靈感，還想到了什麼？"></textarea>
-    <div class="modal-tags" id="detail-tags" style="margin-top:12px;"></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" id="detail-cancel">取消</button>
-      <button class="btn btn-primary" id="detail-save">儲存細節</button>
+  </div>
+</div>
+
+<!-- ═══════════════ DETAIL MODAL ═══════════════ -->
+<div class="modal-overlay detail-modal" id="detail-modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="靈感細節">
+    <!-- View mode -->
+    <div id="detail-view">
+      <div class="detail-header">
+        <div class="detail-thumb-wrap" id="detail-thumb"></div>
+        <div class="detail-title-area">
+          <div class="modal-h" style="font-size:20px;margin-bottom:4px;" id="detail-title"></div>
+          <div class="detail-status-row" id="detail-status"></div>
+        </div>
+      </div>
+      <div class="detail-section" id="detail-desc-section">
+        <div class="detail-section-label">描述</div>
+        <div class="detail-section-value" id="detail-desc-val"></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">標籤</div>
+        <div class="modal-tags" id="detail-tags" style="margin-top:5px;"></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">腦區 · 建立時間</div>
+        <div class="detail-section-value" id="detail-meta"></div>
+      </div>
+      <div id="detail-nextstep-box" class="detail-nextstep-box" style="display:none;">
+        <div class="detail-nextstep-label">下一步</div>
+        <div class="detail-nextstep-value" id="detail-nextstep-val"></div>
+      </div>
+      <div class="detail-footer">
+        <div class="left">
+          <button class="btn btn-ghost btn-danger" id="detail-delete-btn">刪除</button>
+        </div>
+        <button class="btn btn-ghost" id="detail-edit-btn">編輯</button>
+        <button class="btn btn-ghost" id="detail-close-btn">關閉</button>
+      </div>
+    </div>
+
+    <!-- Edit mode -->
+    <div id="detail-edit" style="display:none;">
+      <div class="modal-h">編輯靈感</div>
+      <label class="field-label" style="margin-top:14px;">靈感名稱</label>
+      <input type="text" id="edit-title" />
+      <label class="field-label">描述</label>
+      <textarea id="edit-desc"></textarea>
+      <label class="field-label">標籤 <span class="opt">輸入後按 Enter</span></label>
+      <input type="text" id="edit-tag-input" placeholder="新增標籤..." />
+      <div class="tag-chips" id="edit-tag-chips"></div>
+      <label class="field-label">腦區</label>
+      <div class="region-picker" id="edit-region-picker">
+        <button class="region-pick-btn" data-region="prefrontal">前額葉皮質</button>
+        <button class="region-pick-btn" data-region="hippocampus">海馬迴</button>
+        <button class="region-pick-btn" data-region="parietal">頂葉</button>
+        <button class="region-pick-btn" data-region="dmn">預設模式</button>
+        <button class="region-pick-btn" data-region="reward">獎勵系統</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="edit-cancel-btn">取消</button>
+        <button class="btn btn-primary" id="edit-save-btn">儲存</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════════════
-// Navigation
-// ════════════════════════════════════════════════
-function goToRegion() {
-  document.getElementById('page-home').classList.remove('active');
-  document.getElementById('page-region').classList.add('active');
-  renderRegion(currentRegion);
-  window.scrollTo({ top: 0 });
+// ═══════════════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════════════
+const STORAGE_KEY = 'braindrop_ideas';
+
+function loadIdeas() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
 }
-function goToHome() {
-  document.getElementById('page-region').classList.remove('active');
-  document.getElementById('page-home').classList.add('active');
-  window.scrollTo({ top: 0 });
+function saveIdeas() { localStorage.setItem(STORAGE_KEY, JSON.stringify(ideas)); }
+
+function genId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
-// ════════════════════════════════════════════════
-// Ideas data & state
-// ════════════════════════════════════════════════
-let IDEAS = [
-  { id:1, t:'安排日本行程', d:'研究景點、交通、住宿、路線規劃', tags:['規劃','決策','多步驟'], time:'2 天前', region:'prefrontal', ph:'ph-1', phText:'JAPAN<br/>富士山' },
-  { id:2, t:'AI 行程規劃網頁', d:'做一個能自動排程的旅遊網頁', tags:['產品','規劃','副業'], time:'3 天前', region:'prefrontal', ph:'ph-4', phText:'UI<br/>PLAN' },
-  { id:3, t:'CRM 系統規劃', d:'研究美業 CRM 的功能設計方向', tags:['規劃','決策','產品'], time:'5 天前', region:'prefrontal', ph:'ph-2', phText:'CRM<br/>GRID' },
-  { id:4, t:'30 歲生日的意義', d:'寫一封給未來自己的信', tags:['回憶','寫作','里程碑'], time:'1 週前', region:'hippocampus', ph:'ph-7', phText:'30<br/>BIRTH' },
-  { id:5, t:'童年遊戲場地圖', d:'憑記憶畫出小時候常去的所有地方', tags:['空間','回憶','繪製'], time:'2 週前', region:'hippocampus', ph:'ph-5', phText:'MAP<br/>CHILD' },
-  { id:6, t:'學習抹茶', d:'從一杯抹茶開始，認識日本茶道文化', tags:['學習','文化','體驗'], time:'10 天前', region:'hippocampus', ph:'ph-6', phText:'抹茶<br/>MATCHA' },
-  { id:7, t:'規劃房間動線', d:'重新配置家具讓每天動線更順暢', tags:['空間','整理','生活'], time:'4 天前', region:'parietal', ph:'ph-3', phText:'ROOM<br/>PLAN' },
-  { id:8, t:'IKEA 房間規劃', d:'把選好的家具用 3D 工具排進來看看', tags:['空間','家具','視覺化'], time:'6 天前', region:'parietal', ph:'ph-8', phText:'IKEA<br/>3D' },
-  { id:9, t:'寫一本短小說', d:'把腦中那個一直閃過的場景寫下來', tags:['創作','故事','想像'], time:'昨天', region:'dmn', ph:'ph-2', phText:'STORY<br/>小說' },
-  { id:10, t:'畫一幅夢境', d:'用油彩重現上週那個鮮明的夢', tags:['創作','繪畫','潛意識'], time:'3 天前', region:'dmn', ph:'ph-6', phText:'DREAM<br/>OIL' },
-  { id:11, t:'完成行程後犒賞自己', d:'回國後安排一次無事可做的週末', tags:['獎勵','休息','旅行'], time:'2 天前', region:'reward', ph:'ph-1', phText:'後犒賞<br/>REST' },
-  { id:12, t:'LINE OA 點數中心設計', d:'設計讓使用者愉悅累積的點數系統', tags:['獎勵','產品','UX'], time:'3 天前', region:'reward', ph:'ph-4', phText:'POINTS<br/>OA' },
-];
+// ═══════════════════════════════════════════════════════
+// SEED DATA
+// ═══════════════════════════════════════════════════════
+function seedData() {
+  const n = Date.now();
+  const h = 3600000;
+  return [
+    { id:'s1',  title:'安排日本行程',       desc:'研究景點、交通、住宿、路線規劃',          tags:['規劃','決策','多步驟'], region:'prefrontal',  status:'frozen',   frozenAt:n-18*h, nextStep:'',                    deletedAt:null, createdAt:n-2*86400000,  askedAt:null },
+    { id:'s2',  title:'AI 行程規劃網頁',     desc:'做一個能自動排程的旅遊網頁',               tags:['產品','規劃','副業'],   region:'prefrontal',  status:'frozen',   frozenAt:n-30*h, nextStep:'',                    deletedAt:null, createdAt:n-3*86400000,  askedAt:null },
+    { id:'s3',  title:'CRM 系統規劃',        desc:'研究美業 CRM 的功能設計方向',              tags:['規劃','決策','產品'],   region:'prefrontal',  status:'frozen',   frozenAt:n-6*h,  nextStep:'',                    deletedAt:null, createdAt:n-5*86400000,  askedAt:null },
+    { id:'s4',  title:'30 歲生日的意義',     desc:'寫一封給未來自己的信',                     tags:['回憶','寫作','里程碑'], region:'hippocampus', status:'idle',     frozenAt:n-72*h, nextStep:'',                    deletedAt:null, createdAt:n-7*86400000,  askedAt:n-1000 },
+    { id:'s5',  title:'童年遊戲場地圖',      desc:'憑記憶畫出小時候常去的所有地方',           tags:['空間','回憶','繪製'],   region:'hippocampus', status:'frozen',   frozenAt:n-40*h, nextStep:'',                    deletedAt:null, createdAt:n-14*86400000, askedAt:null },
+    { id:'s6',  title:'學習抹茶',            desc:'從一杯抹茶開始，認識日本茶道文化',         tags:['學習','文化','體驗'],   region:'hippocampus', status:'frozen',   frozenAt:n-12*h, nextStep:'',                    deletedAt:null, createdAt:n-10*86400000, askedAt:null },
+    { id:'s7',  title:'規劃房間動線',        desc:'重新配置家具讓每天動線更順暢',             tags:['空間','整理','生活'],   region:'parietal',    status:'frozen',   frozenAt:n-24*h, nextStep:'',                    deletedAt:null, createdAt:n-4*86400000,  askedAt:null },
+    { id:'s8',  title:'IKEA 房間規劃',       desc:'把選好的家具用 3D 工具排進來看看',         tags:['空間','家具','視覺化'], region:'parietal',    status:'frozen',   frozenAt:n-36*h, nextStep:'',                    deletedAt:null, createdAt:n-6*86400000,  askedAt:null },
+    { id:'s9',  title:'寫一本短小說',        desc:'把腦中那個一直閃過的場景寫下來',           tags:['創作','故事','想像'],   region:'dmn',         status:'frozen',   frozenAt:n-8*h,  nextStep:'',                    deletedAt:null, createdAt:n-86400000,    askedAt:null },
+    { id:'s10', title:'畫一幅夢境',          desc:'用油彩重現上週那個鮮明的夢',               tags:['創作','繪畫','潛意識'], region:'dmn',         status:'idle',     frozenAt:n-60*h, nextStep:'',                    deletedAt:null, createdAt:n-3*86400000,  askedAt:null },
+    { id:'s11', title:'完成行程後犒賞自己',  desc:'回國後安排一次無事可做的週末',             tags:['獎勵','休息','旅行'],   region:'reward',      status:'occupied', frozenAt:n-50*h, nextStep:'預訂一間不帶工作的飯店', deletedAt:null, createdAt:n-2*86400000,  askedAt:n-2000 },
+    { id:'s12', title:'LINE OA 點數中心設計',desc:'設計讓使用者愉悅累積的點數系統',           tags:['獎勵','產品','UX'],     region:'reward',      status:'frozen',   frozenAt:n-20*h, nextStep:'',                    deletedAt:null, createdAt:n-3*86400000,  askedAt:null },
+  ];
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT: load or seed
+// ═══════════════════════════════════════════════════════
+let ideas = loadIdeas();
+if (!ideas.length) { ideas = seedData(); saveIdeas(); }
+
+// ═══════════════════════════════════════════════════════
+// STATUS HELPERS (BRAIN-002)
+// ═══════════════════════════════════════════════════════
+const FREEZE_MS = 48 * 3600000;
 const PH = ['ph-1','ph-2','ph-3','ph-4','ph-5','ph-6','ph-7','ph-8'];
+const REGION_NAMES = { prefrontal:'前額葉皮質', hippocampus:'海馬迴', parietal:'頂葉', dmn:'預設模式網路', reward:'獎勵系統' };
 
+function checkStatuses() {
+  let dirty = false;
+  ideas.forEach(idea => {
+    if (idea.deletedAt !== null) return;
+    if (idea.status === 'frozen' && Date.now() - idea.frozenAt > FREEZE_MS) {
+      idea.status = 'idle';
+      dirty = true;
+    }
+  });
+  if (dirty) saveIdeas();
+}
+
+function getRemainingTime(idea) {
+  const rem = FREEZE_MS - (Date.now() - idea.frozenAt);
+  if (rem <= 0) return '即將解凍';
+  const h = Math.floor(rem / 3600000);
+  const m = Math.floor((rem % 3600000) / 60000);
+  return `剩 ${h}h ${m}m`;
+}
+
+function statusBadgeHTML(idea) {
+  if (idea.status === 'frozen')   return `<span class="status-badge frozen">${getRemainingTime(idea)}</span>`;
+  if (idea.status === 'idle')     return `<span class="status-badge idle">閒置中</span>`;
+  if (idea.status === 'occupied') return `<span class="status-badge occupied">佔據中</span>`;
+  return '';
+}
+
+function formatTime(ts) {
+  const d = Date.now() - ts;
+  const m = Math.floor(d / 60000), h = Math.floor(d / 3600000), day = Math.floor(d / 86400000);
+  if (m < 1) return '剛剛';
+  if (m < 60) return `${m} 分鐘前`;
+  if (h < 24) return `${h} 小時前`;
+  if (day < 30) return `${day} 天前`;
+  return `${Math.floor(day/30)} 個月前`;
+}
+
+function makePhText(title) {
+  const t = title.replace(/\s/g, '');
+  return t.length > 4 ? t.slice(0,4) + '<br/>' + t.slice(4,8) : t;
+}
+
+function activeIdeas() { return ideas.filter(i => i.deletedAt === null); }
+function findIdea(id) { return ideas.find(i => i.id === id); }
+
+// ═══════════════════════════════════════════════════════
+// BRAIN-001: ADD IDEA
+// ═══════════════════════════════════════════════════════
+let addTags = [];
+let addRegion = '';
+
+function addIdea(title, desc, tags, region) {
+  const ph = PH[activeIdeas().length % PH.length];
+  const idea = {
+    id: genId(), title, desc, tags, region,
+    status: 'frozen', frozenAt: Date.now(), nextStep: '',
+    deletedAt: null, createdAt: Date.now(), askedAt: null,
+    ph, phText: makePhText(title),
+  };
+  ideas.unshift(idea);
+  saveIdeas();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+let currentRegion = 'prefrontal';
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0 });
+}
+function goToHome()   { showPage('page-home'); }
+function goToRegion() { showPage('page-region'); renderRegion(currentRegion); }
+function goToTrash()  { showPage('page-trash'); renderTrash(); }
+
+// ═══════════════════════════════════════════════════════
+// RENDER: Floating cards (home brain view)
+// ═══════════════════════════════════════════════════════
 const FLOAT_POS = [
-  { left: 126, top: 196 }, { left: 312, top: 124 }, { left: 524, top: 162 },
-  { left: 712, top: 200 }, { left: 196, top: 372 }, { left: 404, top: 344 },
-  { left: 606, top: 356 }, { left: 314, top: 518 },
+  {left:126,top:196},{left:312,top:124},{left:524,top:162},{left:712,top:200},
+  {left:196,top:372},{left:404,top:344},{left:606,top:356},{left:314,top:518},
 ];
 
-function guessRegion(text, tags) {
-  const s = (text + ' ' + tags.join(' ')).toLowerCase();
-  if (/規劃|決策|目標|計畫|plan/i.test(s)) return 'prefrontal';
-  if (/回憶|記憶|學習|文化|learn/i.test(s)) return 'hippocampus';
-  if (/空間|房間|家具|植物|位置/i.test(s)) return 'parietal';
-  if (/創作|想像|寫作|故事|畫/i.test(s)) return 'dmn';
-  if (/獎勵|慶祝|旅行|副業|成就/i.test(s)) return 'reward';
-  return 'prefrontal';
-}
-
-function addIdea(title, tags) {
-  const ph = PH[IDEAS.length % PH.length];
-  const phText = title.length > 7 ? title.slice(0, 4) + '<br/>' + title.slice(4, 8) : title;
-  IDEAS.unshift({
-    id: Date.now(),
-    t: title,
-    d: tags.length ? '標籤：' + tags.join('、') : '這個靈感剛剛被放進大腦。',
-    tags: tags.length ? tags : ['新靈感'],
-    time: '剛剛',
-    region: guessRegion(title, tags),
-    ph, phText,
-  });
-  renderFloatingCards();
-  renderListView();
-}
-
-function clearBrain() {
-  if (!IDEAS.length) return;
-  if (!confirm('確定要清空所有靈感嗎？')) return;
-  IDEAS.length = 0;
-  renderFloatingCards();
-  renderListView();
-}
-
-// ════════════════════════════════════════════════
-// Render: Floating cards on brain
-// ════════════════════════════════════════════════
 function renderFloatingCards() {
   const stage = document.getElementById('brain-stage');
   const empty = document.getElementById('empty-brain');
   stage.querySelectorAll('.float-card').forEach(c => c.remove());
-
-  if (!IDEAS.length) {
-    empty.style.display = '';
-    return;
-  }
+  const active = activeIdeas();
+  if (!active.length) { empty.style.display = ''; return; }
   empty.style.display = 'none';
-
-  IDEAS.slice(0, FLOAT_POS.length).forEach((idea, idx) => {
+  active.slice(0, FLOAT_POS.length).forEach((idea, idx) => {
     const pos = FLOAT_POS[idx];
     const el = document.createElement('div');
     el.className = 'float-card';
@@ -1290,127 +781,462 @@ function renderFloatingCards() {
     el.style.top = pos.top + 'px';
     el.style.animationDelay = (idx * 0.45) + 's';
     el.innerHTML = `
-      <div class="thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
-      <div class="card-label">${idea.t}</div>
+      <div class="thumb">
+        <div class="ph ${idea.ph}">${idea.phText}</div>
+        <div class="status-dot ${idea.status}"></div>
+      </div>
+      <div class="card-label">${idea.title}</div>
     `;
-    el.addEventListener('click', () => openDetail(idea));
+    el.addEventListener('click', () => openDetail(idea.id));
     stage.appendChild(el);
   });
 }
 
-// ════════════════════════════════════════════════
-// Render: List view
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// RENDER: List view (BRAIN-004)
+// ═══════════════════════════════════════════════════════
 function renderListView() {
   const rows = document.getElementById('list-rows');
-  const REGION_NAMES = { prefrontal:'前額葉皮質', hippocampus:'海馬迴', parietal:'頂葉', dmn:'預設模式網路', reward:'獎勵系統' };
+  const active = activeIdeas().slice().sort((a,b) => b.createdAt - a.createdAt);
 
-  if (!IDEAS.length) {
-    rows.innerHTML = `<div class="list-empty">
-      <div class="le-title">還沒有任何靈感</div>
-      <div class="le-sub">點擊左側「＋新增靈感」開始累積。</div>
-    </div>`;
+  if (!active.length) {
+    rows.innerHTML = `<div class="list-empty"><div class="le-title">還沒有任何靈感</div><div class="le-sub">點擊左側「＋新增靈感」開始累積。</div></div>`;
     document.getElementById('list-count').textContent = '0';
     return;
   }
 
-  rows.innerHTML = IDEAS.map((idea, idx) => `
-    <div class="list-row" data-idx="${idx}">
+  rows.innerHTML = active.map(idea => `
+    <div class="list-row" data-id="${idea.id}">
       <div class="lr-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
       <div>
-        <div class="lr-title">${idea.t}</div>
-        <div class="lr-desc">${idea.d}</div>
-        <div class="lr-meta">${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}</div>
+        <div class="lr-title">${idea.title}</div>
+        <div class="lr-desc">${idea.desc || '（無描述）'}</div>
+        <div class="lr-meta">
+          ${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}
+          ${statusBadgeHTML(idea)}
+        </div>
       </div>
       <div>
-        <div class="lr-time">${idea.time}</div>
+        <div class="lr-time">${formatTime(idea.createdAt)}</div>
         <div class="lr-region"><span class="lr-region-dot"></span>${REGION_NAMES[idea.region] || idea.region}</div>
       </div>
     </div>
   `).join('');
 
-  document.getElementById('list-count').textContent = IDEAS.length;
-
+  document.getElementById('list-count').textContent = active.length;
   rows.querySelectorAll('.list-row').forEach(row => {
-    row.addEventListener('click', () => {
-      const idea = IDEAS[parseInt(row.dataset.idx, 10)];
-      openDetail(idea);
-    });
+    row.addEventListener('click', () => openDetail(row.dataset.id));
   });
 }
 
-// ════════════════════════════════════════════════
-// Add modal
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// RENDER: Region view (BRAIN-005)
+// ═══════════════════════════════════════════════════════
+const REGIONS = {
+  prefrontal: { title:'前額葉皮質', en:'Prefrontal Cortex',  desc:'負責規劃、決策、目標設定、時間管理與自我控制。', hotspot:{cx:340,cy:158,rx:176,ry:88},  balance:'規劃型靈感過多時，建議安排恢復型活動讓大腦喘息。', pills:['散步','冥想','創作','運動'] },
+  hippocampus: { title:'海馬迴',    en:'Hippocampus',         desc:'負責記憶形成、空間導航與經驗整合。',             hotspot:{cx:340,cy:356,rx:140,ry:72},  balance:'記憶整合型靈感累積時，可以嘗試把回憶具象化保存。', pills:['寫作','整理','回顧','分享'] },
+  parietal:    { title:'頂葉',      en:'Parietal Lobe',       desc:'負責空間感知、身體位置整合與注意力分配。',       hotspot:{cx:340,cy:278,rx:158,ry:80},  balance:'空間感知活躍，適合動手做具體的空間實驗。',         pills:['整理','繪圖','量測','改造'] },
+  dmn:         { title:'預設模式網路',en:'Default Mode Network',desc:'負責放空、自我反思、想像與創意聯想。',          hotspot:{cx:340,cy:318,rx:198,ry:130}, balance:'預設模式活躍時，建議減少資訊輸入，多留白給自己。', pills:['散步','發呆','洗澡','冥想'] },
+  reward:      { title:'獎勵系統',  en:'Reward System',       desc:'負責動機、成就感、愉悅體驗與正向回饋。',         hotspot:{cx:340,cy:396,rx:132,ry:78},  balance:'獎勵型靈感多時，記得慶祝每一次小完成。',           pills:['獎勵','慶祝','分享','旅行'] },
+};
+
+function calcLoad(region) {
+  const active = activeIdeas();
+  if (!active.length) return 0;
+  return Math.min(100, Math.round((active.filter(i => i.region === region).length / active.length) * 100));
+}
+
+function loadStateText(pct) {
+  if (pct >= 75) return '偏高';
+  if (pct >= 40) return '中等';
+  if (pct >= 15) return '穩定';
+  return '低活躍';
+}
+
+function renderRegion(key) {
+  currentRegion = key;
+  const r = REGIONS[key]; if (!r) return;
+
+  document.getElementById('region-title').textContent = r.title;
+  document.getElementById('region-en').textContent = r.en;
+  document.getElementById('region-desc').textContent = r.desc;
+  document.getElementById('region-tag-en').textContent = r.en.toUpperCase();
+  document.getElementById('balance-text').textContent = r.balance;
+  document.getElementById('balance-actions').innerHTML = r.pills.map(p => `<button class="pill">${p}</button>`).join('');
+
+  const pct = calcLoad(key);
+  document.getElementById('load-state').textContent = loadStateText(pct);
+  document.getElementById('load-note').textContent = pct > 0 ? `佔全部靈感的 ${pct}%` : '這個腦區目前沒有靈感';
+  const fill = document.getElementById('load-fill');
+  fill.style.width = '0%';
+  setTimeout(() => { fill.style.width = pct + '%'; }, 60);
+
+  const hs = document.getElementById('hotspotEl');
+  hs.setAttribute('cx', r.hotspot.cx); hs.setAttribute('cy', r.hotspot.cy);
+  hs.setAttribute('rx', r.hotspot.rx); hs.setAttribute('ry', r.hotspot.ry);
+
+  const regionIdeas = activeIdeas().filter(i => i.region === key);
+  const list = document.getElementById('idea-list');
+
+  if (!regionIdeas.length) {
+    list.innerHTML = `<div class="list-empty" style="padding:40px 0;"><div class="le-title">這個腦區還沒有靈感</div><div class="le-sub">新增靈感時選擇對應腦區即可出現在這裡。</div></div>`;
+    document.getElementById('idea-count').textContent = '00';
+  } else {
+    list.innerHTML = regionIdeas.map(idea => `
+      <div class="idea-card" data-id="${idea.id}">
+        <div class="idea-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
+        <div class="idea-body">
+          <div class="idea-title">${idea.title}</div>
+          <div class="idea-desc">${idea.desc || '（無描述）'}</div>
+          <div class="idea-meta">
+            ${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}
+            ${statusBadgeHTML(idea)}
+          </div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('idea-count').textContent = String(regionIdeas.length).padStart(2, '0');
+    list.querySelectorAll('.idea-card').forEach(c => c.addEventListener('click', () => openDetail(c.dataset.id)));
+  }
+
+  document.querySelectorAll('#region-tabs .nav-tab').forEach(b => b.classList.toggle('active', b.dataset.region === key));
+  document.querySelectorAll('#region-sidenav .region-icon').forEach(b => b.classList.toggle('active', b.dataset.region === key));
+}
+
+function renderAll() {
+  renderFloatingCards();
+  renderListView();
+  if (document.getElementById('page-region').classList.contains('active')) renderRegion(currentRegion);
+  if (document.getElementById('page-trash').classList.contains('active')) renderTrash();
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER: Trash (BRAIN-007)
+// ═══════════════════════════════════════════════════════
+function renderTrash() {
+  const container = document.getElementById('trash-rows');
+  const deleted = ideas.filter(i => i.deletedAt !== null).sort((a,b) => b.deletedAt - a.deletedAt);
+
+  if (!deleted.length) {
+    container.innerHTML = `<div class="trash-empty"><div class="le-title">垃圾桶是空的</div><div class="le-sub">沒有已刪除的靈感。</div></div>`;
+    return;
+  }
+
+  container.innerHTML = deleted.map(idea => `
+    <div class="trash-row">
+      <div class="tr-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
+      <div class="tr-body">
+        <div class="tr-title">${idea.title}</div>
+        <div class="tr-meta">刪除於 ${formatTime(idea.deletedAt)} · ${REGION_NAMES[idea.region] || idea.region}</div>
+      </div>
+      <div class="tr-acts">
+        <button class="trash-btn trash-btn-restore" data-id="${idea.id}">還原</button>
+        <button class="trash-btn trash-btn-perm" data-id="${idea.id}">永久刪除</button>
+      </div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.trash-btn-restore').forEach(btn => {
+    btn.addEventListener('click', () => restoreIdea(btn.dataset.id));
+  });
+  container.querySelectorAll('.trash-btn-perm').forEach(btn => {
+    btn.addEventListener('click', () => permanentDelete(btn.dataset.id));
+  });
+}
+
+function restoreIdea(id) {
+  const idea = findIdea(id); if (!idea) return;
+  idea.deletedAt = null;
+  idea.status = 'frozen';
+  idea.frozenAt = Date.now();
+  idea.askedAt = null;
+  saveIdeas();
+  renderTrash();
+  renderFloatingCards();
+  renderListView();
+}
+
+function permanentDelete(id) {
+  if (!confirm('永久刪除後無法復原，確定嗎？')) return;
+  ideas = ideas.filter(i => i.id !== id);
+  saveIdeas();
+  renderTrash();
+}
+
+// ═══════════════════════════════════════════════════════
+// CLEAR BRAIN
+// ═══════════════════════════════════════════════════════
+function clearBrain() {
+  const active = activeIdeas();
+  if (!active.length) return;
+  if (!confirm(`確定要清空全部 ${active.length} 個靈感嗎？它們會移到垃圾桶。`)) return;
+  const now = Date.now();
+  active.forEach(i => { i.deletedAt = now; });
+  saveIdeas();
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════
+// ADD MODAL (BRAIN-001)
+// ═══════════════════════════════════════════════════════
 const addModal = document.getElementById('add-modal');
 
 function openAddModal() {
+  addTags = []; addRegion = '';
+  document.getElementById('add-title').value = '';
+  document.getElementById('add-desc').value = '';
+  document.getElementById('add-tag-input').value = '';
+  document.getElementById('add-tag-chips').innerHTML = '';
+  document.querySelectorAll('#add-region-picker .region-pick-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('add-title-err').classList.remove('show');
+  document.getElementById('add-region-err').classList.remove('show');
   addModal.classList.add('show');
-  setTimeout(() => document.getElementById('add-input').focus(), 180);
+  setTimeout(() => document.getElementById('add-title').focus(), 180);
 }
+
+function closeAddModal() { addModal.classList.remove('show'); }
+
+function renderAddTags() {
+  document.getElementById('add-tag-chips').innerHTML = addTags.map((t,i) => `
+    <span class="tag-chip-rm">${t}<button data-i="${i}" aria-label="移除">×</button></span>
+  `).join('');
+  document.getElementById('add-tag-chips').querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => { addTags.splice(parseInt(b.dataset.i), 1); renderAddTags(); });
+  });
+}
+
+document.getElementById('add-tag-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const v = e.target.value.trim();
+    if (v && !addTags.includes(v)) { addTags.push(v); renderAddTags(); }
+    e.target.value = '';
+  }
+});
+
+document.querySelectorAll('#add-region-picker .region-pick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#add-region-picker .region-pick-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    addRegion = btn.dataset.region;
+    document.getElementById('add-region-err').classList.remove('show');
+  });
+});
 
 document.getElementById('open-add').addEventListener('click', openAddModal);
 document.getElementById('empty-add-btn').addEventListener('click', openAddModal);
-document.getElementById('add-cancel').addEventListener('click', () => closeAddModal());
+document.getElementById('add-cancel').addEventListener('click', closeAddModal);
+addModal.addEventListener('click', e => { if (e.target === addModal) closeAddModal(); });
 
 document.getElementById('add-submit').addEventListener('click', () => {
-  const v = document.getElementById('add-input').value.trim();
-  const selectedTags = [...document.querySelectorAll('#add-tags .modal-tag.on')].map(t => t.textContent);
-  if (v) addIdea(v, selectedTags);
+  const title = document.getElementById('add-title').value.trim();
+  let valid = true;
+  if (!title) { document.getElementById('add-title-err').classList.add('show'); valid = false; }
+  if (!addRegion) { document.getElementById('add-region-err').classList.add('show'); valid = false; }
+  if (!valid) return;
+  addIdea(title, document.getElementById('add-desc').value.trim(), addTags.slice(), addRegion);
   closeAddModal();
 });
 
-addModal.addEventListener('click', e => { if (e.target === addModal) closeAddModal(); });
-
-document.querySelectorAll('#add-tags .modal-tag').forEach(t => {
-  t.addEventListener('click', () => t.classList.toggle('on'));
-});
-
-function closeAddModal() {
-  addModal.classList.remove('show');
-  document.getElementById('add-input').value = '';
-  document.querySelectorAll('#add-tags .modal-tag').forEach(t => t.classList.remove('on'));
-}
-
-// ════════════════════════════════════════════════
-// Detail modal
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// DETAIL MODAL (BRAIN-006)
+// ═══════════════════════════════════════════════════════
+let detailIdeaId = null;
+let editTags = [];
+let editRegion = '';
 const detailModal = document.getElementById('detail-modal');
 
-function openDetail(idea) {
-  document.getElementById('detail-title').textContent = idea.t;
-  document.getElementById('detail-thumb').innerHTML = `<div class="ph ${idea.ph}">${idea.phText}</div>`;
-  document.getElementById('detail-tags').innerHTML = idea.tags.map(t => `<span class="modal-tag on">${t}</span>`).join('');
-  document.getElementById('detail-input').value = '';
+function openDetail(id) {
+  const idea = findIdea(id); if (!idea) return;
+  detailIdeaId = id;
+  showDetailView(idea);
   detailModal.classList.add('show');
-  setTimeout(() => document.getElementById('detail-input').focus(), 180);
 }
 
-document.getElementById('detail-cancel').addEventListener('click', () => detailModal.classList.remove('show'));
-document.getElementById('detail-save').addEventListener('click', () => detailModal.classList.remove('show'));
+function showDetailView(idea) {
+  document.getElementById('detail-view').style.display = '';
+  document.getElementById('detail-edit').style.display = 'none';
+  document.getElementById('detail-thumb').innerHTML = `<div class="ph ${idea.ph}" style="width:100%;height:100%;">${idea.phText}</div>`;
+  document.getElementById('detail-title').textContent = idea.title;
+  document.getElementById('detail-status').innerHTML = statusBadgeHTML(idea);
+  document.getElementById('detail-desc-val').textContent = idea.desc || '（無描述）';
+  document.getElementById('detail-tags').innerHTML = idea.tags.map(t => `<span class="chip">${t}</span>`).join('');
+  document.getElementById('detail-meta').textContent = `${REGION_NAMES[idea.region] || idea.region} · ${formatTime(idea.createdAt)}`;
+
+  const nsBox = document.getElementById('detail-nextstep-box');
+  if (idea.status === 'occupied' && idea.nextStep) {
+    nsBox.style.display = '';
+    document.getElementById('detail-nextstep-val').textContent = idea.nextStep;
+  } else {
+    nsBox.style.display = 'none';
+  }
+}
+
+function showEditMode(idea) {
+  document.getElementById('detail-view').style.display = 'none';
+  document.getElementById('detail-edit').style.display = '';
+  editTags = idea.tags.slice();
+  editRegion = idea.region;
+  document.getElementById('edit-title').value = idea.title;
+  document.getElementById('edit-desc').value = idea.desc || '';
+  document.getElementById('edit-tag-input').value = '';
+  renderEditTags();
+  document.querySelectorAll('#edit-region-picker .region-pick-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.region === idea.region);
+  });
+}
+
+function renderEditTags() {
+  document.getElementById('edit-tag-chips').innerHTML = editTags.map((t,i) => `
+    <span class="tag-chip-rm">${t}<button data-i="${i}" aria-label="移除">×</button></span>
+  `).join('');
+  document.getElementById('edit-tag-chips').querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => { editTags.splice(parseInt(b.dataset.i), 1); renderEditTags(); });
+  });
+}
+
+document.getElementById('edit-tag-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const v = e.target.value.trim();
+    if (v && !editTags.includes(v)) { editTags.push(v); renderEditTags(); }
+    e.target.value = '';
+  }
+});
+
+document.querySelectorAll('#edit-region-picker .region-pick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#edit-region-picker .region-pick-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    editRegion = btn.dataset.region;
+  });
+});
+
+document.getElementById('detail-edit-btn').addEventListener('click', () => {
+  const idea = findIdea(detailIdeaId); if (!idea) return;
+  showEditMode(idea);
+});
+
+document.getElementById('edit-cancel-btn').addEventListener('click', () => {
+  const idea = findIdea(detailIdeaId); if (!idea) return;
+  showDetailView(idea);
+});
+
+document.getElementById('edit-save-btn').addEventListener('click', () => {
+  const idea = findIdea(detailIdeaId); if (!idea) return;
+  const newTitle = document.getElementById('edit-title').value.trim();
+  if (!newTitle) return;
+  idea.title = newTitle;
+  idea.desc = document.getElementById('edit-desc').value.trim();
+  idea.tags = editTags.slice();
+  if (editRegion) idea.region = editRegion;
+  saveIdeas();
+  renderAll();
+  showDetailView(idea);
+});
+
+document.getElementById('detail-delete-btn').addEventListener('click', () => {
+  if (!confirm('確定要刪除這個靈感嗎？可在垃圾桶找回。')) return;
+  const idea = findIdea(detailIdeaId); if (!idea) return;
+  idea.deletedAt = Date.now();
+  saveIdeas();
+  renderAll();
+  detailModal.classList.remove('show');
+});
+
+document.getElementById('detail-close-btn').addEventListener('click', () => detailModal.classList.remove('show'));
 detailModal.addEventListener('click', e => { if (e.target === detailModal) detailModal.classList.remove('show'); });
 
-// ════════════════════════════════════════════════
-// List/brain view toggle
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// DEFROST MODAL (BRAIN-003)
+// ═══════════════════════════════════════════════════════
+let defrostQueue = [];
+let defrostCurrent = null;
+const defrostModal = document.getElementById('defrost-modal');
+
+function checkDefrost() {
+  defrostQueue = ideas.filter(i => i.deletedAt === null && i.status === 'idle' && !i.askedAt);
+  if (defrostQueue.length) openDefrost(defrostQueue.shift());
+}
+
+function openDefrost(idea) {
+  defrostCurrent = idea;
+  document.getElementById('defrost-title').textContent = idea.title;
+  document.getElementById('defrost-desc').textContent = idea.desc || '（無描述）';
+  document.getElementById('defrost-main-btns').style.display = '';
+  document.getElementById('defrost-nextstep-area').style.display = 'none';
+  document.getElementById('defrost-nextstep-input').value = '';
+  defrostModal.classList.add('show');
+}
+
+function closeDefrost() {
+  defrostModal.classList.remove('show');
+  setTimeout(() => {
+    if (defrostQueue.length) openDefrost(defrostQueue.shift());
+  }, 400);
+}
+
+document.getElementById('defrost-occupy').addEventListener('click', () => {
+  document.getElementById('defrost-main-btns').style.display = 'none';
+  document.getElementById('defrost-nextstep-area').style.display = '';
+  setTimeout(() => document.getElementById('defrost-nextstep-input').focus(), 100);
+});
+
+document.getElementById('defrost-nextstep-back').addEventListener('click', () => {
+  document.getElementById('defrost-main-btns').style.display = '';
+  document.getElementById('defrost-nextstep-area').style.display = 'none';
+});
+
+document.getElementById('defrost-nextstep-confirm').addEventListener('click', () => {
+  if (!defrostCurrent) return;
+  defrostCurrent.status = 'occupied';
+  defrostCurrent.askedAt = Date.now();
+  defrostCurrent.nextStep = document.getElementById('defrost-nextstep-input').value.trim();
+  saveIdeas();
+  renderAll();
+  closeDefrost();
+});
+
+document.getElementById('defrost-idle').addEventListener('click', () => {
+  if (!defrostCurrent) return;
+  defrostCurrent.askedAt = Date.now();
+  saveIdeas();
+  renderAll();
+  closeDefrost();
+});
+
+document.getElementById('defrost-delete').addEventListener('click', () => {
+  if (!defrostCurrent) return;
+  if (!confirm('確定要丟掉這個靈感嗎？可在垃圾桶找回。')) return;
+  defrostCurrent.deletedAt = Date.now();
+  saveIdeas();
+  renderAll();
+  closeDefrost();
+});
+
+// ═══════════════════════════════════════════════════════
+// LIST / BRAIN VIEW TOGGLE
+// ═══════════════════════════════════════════════════════
 const ICON_LIST  = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>`;
 const ICON_BRAIN = `<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9.5 2a2.5 2.5 0 0 1 2.5 2.5v2a2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 1 0 5A2.5 2.5 0 0 0 12 16.5v2a2.5 2.5 0 0 1-5 0v-1.5a2.5 2.5 0 0 0-2.5-2.5 2.5 2.5 0 0 1 0-5A2.5 2.5 0 0 0 7 7V4.5A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2a2.5 2.5 0 0 1 2.5 2.5V6a2.5 2.5 0 0 0 2.5 2.5"/></svg>`;
 
-const toggleBtn   = document.getElementById('toggle-view');
-const toggleBtnEl = document.getElementById('toggle-btn');
-const toggleLabel = document.getElementById('toggle-label');
-
-toggleBtn.addEventListener('click', () => {
+document.getElementById('toggle-view').addEventListener('click', () => {
   const isList = document.body.classList.toggle('list-mode');
-  toggleBtnEl.innerHTML = isList ? ICON_BRAIN : ICON_LIST;
-  toggleBtnEl.classList.toggle('active-view', isList);
-  toggleLabel.textContent = isList ? '大腦\n檢視' : '清單\n檢視';
+  document.getElementById('toggle-btn').innerHTML = isList ? ICON_BRAIN : ICON_LIST;
+  document.getElementById('toggle-btn').classList.toggle('active-view', isList);
+  document.getElementById('toggle-label').innerHTML = isList ? '大腦<br/>檢視' : '清單<br/>檢視';
   window.scrollTo({ top: 0 });
 });
 
-// ════════════════════════════════════════════════
-// Keyboard shortcuts
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// REGION TABS / SIDENAV
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('#region-tabs .nav-tab').forEach(b => b.addEventListener('click', () => renderRegion(b.dataset.region)));
+document.querySelectorAll('#region-sidenav .region-icon').forEach(b => b.addEventListener('click', () => renderRegion(b.dataset.region)));
+
+// ═══════════════════════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════════════════════
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (detailModal.classList.contains('show')) { detailModal.classList.remove('show'); return; }
@@ -1418,141 +1244,13 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ════════════════════════════════════════════════
-// Region data
-// ════════════════════════════════════════════════
-const REGIONS = {
-  prefrontal: {
-    title: '前額葉皮質', en: 'Prefrontal Cortex',
-    desc: '負責規劃、決策、目標設定、時間管理與自我控制。',
-    load: 72, state: '偏高', note: '近期有較多規劃與決策任務',
-    hotspot: { cx: 340, cy: 158, rx: 176, ry: 88 },
-    balance: '你的前額葉正在高負荷運作，建議安排恢復型活動。',
-    pills: ['散步','冥想','創作','運動'],
-  },
-  hippocampus: {
-    title: '海馬迴', en: 'Hippocampus',
-    desc: '負責記憶形成、空間導航與經驗整合。',
-    load: 48, state: '穩定', note: '記憶整理進行中，狀態平衡',
-    hotspot: { cx: 340, cy: 356, rx: 140, ry: 72 },
-    balance: '海馬迴運作穩定，可以嘗試把回憶具象化保存。',
-    pills: ['寫作','整理','回顧','分享'],
-  },
-  parietal: {
-    title: '頂葉', en: 'Parietal Lobe',
-    desc: '負責空間感知、身體位置整合與注意力分配。',
-    load: 58, state: '中等', note: '空間思考活躍，整體平衡',
-    hotspot: { cx: 340, cy: 278, rx: 158, ry: 80 },
-    balance: '空間感知活躍，適合動手做具體的空間實驗。',
-    pills: ['整理','繪圖','量測','改造'],
-  },
-  dmn: {
-    title: '預設模式網路', en: 'Default Mode Network',
-    desc: '負責放空、自我反思、想像與創意聯想。',
-    load: 35, state: '低活躍', note: '建議保留更多放空與想像的時間',
-    hotspot: { cx: 340, cy: 318, rx: 198, ry: 130 },
-    balance: '預設模式偏低，建議減少資訊輸入，多留白給自己。',
-    pills: ['散步','發呆','洗澡','冥想'],
-  },
-  reward: {
-    title: '獎勵系統', en: 'Reward System',
-    desc: '負責動機、成就感、愉悅體驗與正向回饋。',
-    load: 64, state: '活躍', note: '近期有不少讓你期待的小事',
-    hotspot: { cx: 340, cy: 396, rx: 132, ry: 78 },
-    balance: '獎勵系統運作良好，記得慶祝每一次完成。',
-    pills: ['獎勵','慶祝','分享','旅行'],
-  },
-};
-
-// ════════════════════════════════════════════════
-// Render region
-// ════════════════════════════════════════════════
-let currentRegion = 'prefrontal';
-
-function renderRegion(key) {
-  currentRegion = key;
-  const r = REGIONS[key];
-  if (!r) return;
-
-  document.getElementById('region-title').textContent = r.title;
-  document.getElementById('region-en').textContent = r.en;
-  document.getElementById('region-desc').textContent = r.desc;
-  document.getElementById('load-state').textContent = r.state;
-  document.getElementById('load-note').textContent = r.note;
-  document.getElementById('region-tag-en').textContent = r.en.toUpperCase();
-  document.getElementById('balance-text').textContent = r.balance;
-
-  // Animate progress bar
-  const fill = document.getElementById('load-fill');
-  fill.style.width = '0%';
-  setTimeout(() => { fill.style.width = r.load + '%'; }, 60);
-
-  // Move hotspot
-  const hs = document.getElementById('hotspotEl');
-  hs.setAttribute('cx', r.hotspot.cx);
-  hs.setAttribute('cy', r.hotspot.cy);
-  hs.setAttribute('rx', r.hotspot.rx);
-  hs.setAttribute('ry', r.hotspot.ry);
-
-  // Render ideas — filtered from shared IDEAS array
-  const regionIdeas = IDEAS.filter(i => i.region === key);
-  const list = document.getElementById('idea-list');
-
-  if (!regionIdeas.length) {
-    list.innerHTML = `<div class="list-empty" style="padding:40px 0;">
-      <div class="le-title">這個腦區還沒有靈感</div>
-      <div class="le-sub">回主頁新增靈感，會自動分配到對應腦區。</div>
-    </div>`;
-    document.getElementById('idea-count').textContent = '00';
-  } else {
-    list.innerHTML = regionIdeas.map((idea, idx) => `
-      <div class="idea-card" data-idx="${idx}">
-        <div class="idea-thumb"><div class="ph ${idea.ph}">${idea.phText}</div></div>
-        <div class="idea-body">
-          <div class="idea-title">${idea.t}</div>
-          <div class="idea-desc">${idea.d}</div>
-          <div class="idea-meta">
-            ${idea.tags.map(t => `<span class="chip">${t}</span>`).join('')}
-            <span class="idea-time">${idea.time}</span>
-          </div>
-        </div>
-      </div>
-    `).join('');
-
-    document.getElementById('idea-count').textContent = String(regionIdeas.length).padStart(2, '0');
-
-    list.querySelectorAll('.idea-card').forEach(card => {
-      card.addEventListener('click', () => openDetail(regionIdeas[parseInt(card.dataset.idx, 10)]));
-    });
-  }
-
-  // Balance pills
-  document.getElementById('balance-actions').innerHTML =
-    r.pills.map(p => `<button class="pill">${p}</button>`).join('');
-
-  // Active states
-  document.querySelectorAll('#region-tabs .nav-tab').forEach(b => {
-    b.classList.toggle('active', b.dataset.region === key);
-  });
-  document.querySelectorAll('#region-sidenav .region-icon').forEach(b => {
-    b.classList.toggle('active', b.dataset.region === key);
-  });
-}
-
-// Tab and sidenav clicks
-document.querySelectorAll('#region-tabs .nav-tab').forEach(b => {
-  b.addEventListener('click', () => renderRegion(b.dataset.region));
-});
-document.querySelectorAll('#region-sidenav .region-icon').forEach(b => {
-  b.addEventListener('click', () => renderRegion(b.dataset.region));
-});
-
-// ════════════════════════════════════════════════
-// Init
-// ════════════════════════════════════════════════
-renderListView();
-renderFloatingCards();
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+checkStatuses();
+renderAll();
 renderRegion('prefrontal');
+checkDefrost();
 </script>
 </body>
 </html>
